@@ -111,4 +111,3 @@ See `docs/` for more.
 ## Attribution
 
 Built with Claude Code. See `.claude/agents/*.md` for the dev-side agents.
-# kinetiq
