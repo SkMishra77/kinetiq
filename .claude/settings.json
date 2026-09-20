@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv run pytest*)",
+      "Bash(uv run ruff*)",
+      "Bash(uv run mypy*)",
+      "Bash(uv run kinetiq verify-citations*)",
+      "Bash(uv run kinetiq migrate*)",
+      "Bash(uv run kinetiq seed*)",
+      "Bash(uv run kinetiq print-url*)",
+      "Bash(uv run kinetiq gen-token*)",
+      "Bash(docker compose config*)",
+      "Bash(docker compose ps*)",
+      "Bash(docker compose logs*)"
+    ]
+  }
+}

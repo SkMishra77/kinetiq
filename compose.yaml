@@ -1,0 +1,86 @@
+# Kinetiq stack: MCP server + Caddy (auto-TLS) + DuckDNS updater.
+# Alternative edge is under the `ngrok` profile; select via COMPOSE_PROFILES.
+#
+# Usage:
+#   docker compose --profile caddy up -d --build      # default (nip.io / DuckDNS)
+#   COMPOSE_PROFILES=ngrok docker compose up -d       # ngrok tunnel instead
+
+name: kinetiq
+
+services:
+  kinetiq:
+    build: .
+    image: kinetiq:local
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PORT: "8765"
+      KINETIQ_DATA_DIR: /data
+    volumes:
+      - kinetiq_data:/data
+    expose: ["8765"]
+    read_only: true
+    tmpfs: ["/tmp"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "5"}
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8765/health',timeout=3).status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  caddy:
+    profiles: ["caddy"]
+    image: caddy:2.11-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      KINETIQ_DOMAIN: ${KINETIQ_DOMAIN}
+      KINETIQ_ACME_EMAIL: ${KINETIQ_ACME_EMAIL:-}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      kinetiq:
+        condition: service_healthy
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+
+  duckdns:
+    profiles: ["caddy"]
+    image: lscr.io/linuxserver/duckdns:latest
+    restart: unless-stopped
+    environment:
+      PUID: "1000"
+      PGID: "1000"
+      TZ: ${KINETIQ_TIMEZONE:-Asia/Kolkata}
+      SUBDOMAINS: ${DUCKDNS_SUBDOMAIN}
+      TOKEN: ${DUCKDNS_TOKEN}
+      UPDATE_IP: "ipv4"
+      LOG_FILE: "false"
+
+  ngrok:
+    profiles: ["ngrok"]
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    command: ["http", "--url=${KINETIQ_DOMAIN}", "kinetiq:8765"]
+    depends_on:
+      kinetiq:
+        condition: service_healthy
+
+volumes:
+  kinetiq_data: {}
+  caddy_data: {}
+  caddy_config: {}

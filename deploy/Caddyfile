@@ -1,0 +1,32 @@
+# Auto-TLS via Let's Encrypt (DuckDNS subdomain in KINETIQ_DOMAIN).
+# Access logs are OFF so the URL token never lands in logs.
+{
+    email {$KINETIQ_ACME_EMAIL}
+    # Explicitly no admin API on the public network.
+    admin off
+}
+
+{$KINETIQ_DOMAIN} {
+    header -Server
+    # Only /health and /mcp/* reach the upstream. Everything else is 404 here.
+    @mcp    path /mcp/*
+    @health path /health
+
+    handle @mcp {
+        reverse_proxy kinetiq:8765 {
+            flush_interval -1
+            transport http {
+                read_timeout 0
+                write_timeout 0
+                keepalive 2m
+            }
+        }
+    }
+    handle @health {
+        reverse_proxy kinetiq:8765
+    }
+    handle {
+        respond 404
+    }
+    # Compression is intentionally OFF (interferes with SSE streaming).
+}

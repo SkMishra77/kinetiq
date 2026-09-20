@@ -1,0 +1,28 @@
+# venv
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# secrets / data
+.env
+.env.*
+!.env.example
+data/
+*.db
+*.db-wal
+*.db-shm
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# build
+dist/
+build/
+*.egg-info/

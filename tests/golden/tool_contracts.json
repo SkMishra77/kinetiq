@@ -1,0 +1,156 @@
+[
+  {
+    "name": "add_exercise",
+    "read_only": false,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Add a custom exercise not in the library (or an alias for an existing one via `aliases`). Check search_exercises first t"
+  },
+  {
+    "name": "amend_workout",
+    "read_only": false,
+    "destructive": true,
+    "open_world": false,
+    "description_head": "Correct or void a single workout. Actions: edit_wellness, edit_notes, void_session (soft-delete, requires confirm=True)."
+  },
+  {
+    "name": "analyze_workout",
+    "read_only": false,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Re-run the deterministic analysis for one workout \u2014 useful after editing sets or when the engine version bumps."
+  },
+  {
+    "name": "compare_exercises",
+    "read_only": true,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Rank candidate exercises for a `muscle` + `goal` combination using evidence strength, muscle emphasis, equipment fit and"
+  },
+  {
+    "name": "create_program",
+    "read_only": false,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Store a training program you have designed for the user (split, sessions, exercises with sets \u00d7 rep range, target RIR, r"
+  },
+  {
+    "name": "edit_session_template",
+    "read_only": false,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Change one exercise in a session template (soft-deactivates the old row and keeps history). Actions: swap (replace exerc"
+  },
+  {
+    "name": "export_training_data",
+    "read_only": true,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Bulk export training data as JSON. Scopes: 'workouts', 'checkins', 'profile', 'all'. Use for backups or moving to anothe"
+  },
+  {
+    "name": "get_briefing",
+    "read_only": true,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "CALL THIS FIRST in every conversation before giving any training advice. Returns the user's profile summary, active prog"
+  },
+  {
+    "name": "get_exercise_history",
+    "read_only": true,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Return every session where an exercise was performed: date, sets, top load, e1RM, tonnage, average RPE, feel/pain, and t"
+  },
+  {
+    "name": "get_program",
+    "read_only": true,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Return the active program (or a specific program_id) with all session templates, template exercises and the active block"
+  },
+  {
+    "name": "get_training_history",
+    "read_only": true,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "List recent workouts (optionally filtered by date range or muscle). Returns per-session summary, performance & fatigue s"
+  },
+  {
+    "name": "log_checkin",
+    "read_only": false,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Record non-workout data for a date: body weight, sleep hours and quality, energy, per-muscle soreness (0-5), stress, res"
+  },
+  {
+    "name": "log_pain_or_injury",
+    "read_only": false,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Open, update or resolve a pain / injury / limitation. Setting status='active' makes plan_next_session substitute or cap "
+  },
+  {
+    "name": "log_workout",
+    "read_only": false,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Store a completed workout AND analyse it in one call. Accepts a list of exercises with either structured `sets` or a raw"
+  },
+  {
+    "name": "plan_next_session",
+    "read_only": true,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Build today's workout from the active program and the user's history. Returns the next template in the rotation (or `tem"
+  },
+  {
+    "name": "save_finding",
+    "read_only": false,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Persist a curated evidence conclusion into the knowledge base so future sessions reuse it without re-searching. Cite onl"
+  },
+  {
+    "name": "save_profile",
+    "read_only": false,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Create or update the user's persistent profile with a partial patch (omitted fields stay unchanged; lists replace when p"
+  },
+  {
+    "name": "search_exercises",
+    "read_only": true,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Find exercises in the library by name/alias, muscle, equipment or movement pattern. With `respect_profile=True` (default"
+  },
+  {
+    "name": "search_knowledge",
+    "read_only": true,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Curated principle notes (volume, rep ranges, rest, pain, deload, ...) and per-exercise evidence with citations (PMID/DOI"
+  },
+  {
+    "name": "search_research",
+    "read_only": true,
+    "destructive": false,
+    "open_world": true,
+    "description_head": "Live literature search across PubMed, Semantic Scholar and OpenAlex with local 30-day caching and provider fallback. Ret"
+  },
+  {
+    "name": "set_program_phase",
+    "read_only": false,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Program-level actions: advance_block (start the next block), start_deload, end_deload, set_next_session (override rotati"
+  },
+  {
+    "name": "update_insight",
+    "read_only": false,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Acknowledge, resolve or dismiss an analysis flag (plateau, fatigue, pain, adherence...). Dismissing an insight also canc"
+  }
+]
