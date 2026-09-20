@@ -8,11 +8,13 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 
-# secrets / data
+# secrets / runtime data
 .env
 .env.*
 !.env.example
-data/
+# Only the top-level runtime `data/` dir (holds kinetiq.db and backups).
+# The `src/kinetiq/data/` seed YAMLs are tracked — do NOT ignore them.
+/data/
 *.db
 *.db-wal
 *.db-shm

@@ -1,0 +1,113 @@
+# Kinetiq training-principle notes. Citations are stored as PMIDs so the
+# verify-citations CLI can check them against PubMed esummary.
+#
+# strength values: strong | moderate | limited | mixed | expert_opinion
+
+- slug: volume-landmarks
+  topic: volume
+  goal_tags: [muscle_gain, strength, recomposition]
+  claim: "Weekly working-set volume per muscle drives hypertrophy up to roughly 10–20 hard sets/week, with individual response varying."
+  detail: "Meta-analytic evidence shows a dose-response relationship between weekly sets and hypertrophy. Beyond ~10 sets/week per muscle, gains continue but with diminishing returns; ~20 sets/week is around the practical upper end for most trainees."
+  strength: strong
+  citations:
+    - {pmid: "27433992", title: "Dose-response relationship between weekly resistance training volume and increases in muscle mass"}
+
+- slug: rep-ranges-hypertrophy
+  topic: rep_range
+  goal_tags: [muscle_gain, recomposition]
+  claim: "Hypertrophy is similar across a broad rep range (roughly 6–30) when sets are taken close to failure (RIR 0–3)."
+  detail: "Low-load training taken close to failure produces similar hypertrophy to high-load training. Effort near failure matters more than the specific rep count."
+  strength: strong
+  citations:
+    - {pmid: "28834797", title: "Effects of low- vs. high-load resistance training on muscle strength and hypertrophy"}
+
+- slug: rep-ranges-strength
+  topic: rep_range
+  goal_tags: [strength]
+  claim: "Maximal-strength adaptations favour heavy loads (roughly ≥ 80 % 1RM, 1–6 reps) with lower reps per set."
+  detail: "Strength expression is highly specific; while hypertrophy is rep-agnostic near failure, one-rep-max strength improves fastest with heavier loads."
+  strength: strong
+  citations:
+    - {pmid: "28834797", title: "Effects of low- vs. high-load resistance training on muscle strength and hypertrophy"}
+
+- slug: rest-intervals-strength
+  topic: rest
+  goal_tags: [strength, muscle_gain]
+  claim: "For maximal strength and volume performance, rest 2–3 min or more between working sets of compound lifts."
+  detail: "Short rest (~1 min) reduces reps completed and long-term strength gains vs. longer rest (~2–3 min) for compound lifts. Isolation exercises tolerate shorter rests."
+  strength: strong
+  citations:
+    - {pmid: "26605807", title: "Longer inter-set rest periods enhance muscle strength and hypertrophy in resistance-trained men"}
+
+- slug: frequency
+  topic: rest
+  goal_tags: [muscle_gain]
+  claim: "Training each muscle ≥ 2 sessions/week yields modestly more hypertrophy than 1×/week when volume is equated."
+  detail: "The exact frequency matters less than total weekly volume, but distributing volume across ≥ 2 sessions is a small effect in favour of higher frequency."
+  strength: moderate
+  citations:
+    - {pmid: "27102172", title: "Effects of resistance training frequency on measures of muscle hypertrophy: a systematic review and meta-analysis"}
+
+- slug: exercise-order
+  topic: exercise_order
+  goal_tags: [strength, muscle_gain]
+  claim: "Perform compound / higher-priority exercises first; performance on later exercises drops relative to when placed first."
+  detail: "Fatigue accumulates, so exercises done later in a session are performed with less load or fewer reps. Place your priority movement first."
+  strength: moderate
+  citations:
+    - {pmid: "22292516", title: "Exercise order in resistance training"}
+
+- slug: tempo-eccentric
+  topic: tempo
+  goal_tags: [muscle_gain]
+  claim: "Very slow eccentrics (> 4 s) are not required for hypertrophy; controlled reps (roughly 1–4 s down, 1 s up) work well."
+  detail: "Extremely slow tempo tends to reduce total volume without increasing hypertrophy; use tempo primarily for technical control."
+  strength: moderate
+  citations:
+    - {pmid: "25601394", title: "Effect of repetition duration during resistance training on muscle hypertrophy"}
+
+- slug: proximity-to-failure
+  topic: intensity
+  goal_tags: [muscle_gain, strength]
+  claim: "Sets taken to within 0–3 reps of failure (RIR 0–3) drive most hypertrophy; going to failure on every set adds fatigue with modest extra benefit."
+  detail: "Stopping short by 1–3 reps allows similar hypertrophy per set as taking every set to failure and preserves recovery for subsequent sets and sessions."
+  strength: moderate
+
+- slug: warm-up
+  topic: warmup
+  goal_tags: [strength, muscle_gain, general_fitness]
+  claim: "A short general warm-up plus 2–3 ramp sets on the first compound reduces injury risk and improves performance."
+  detail: "A brief cardio warm-up plus specific ramp sets is sufficient; extensive static stretching before heavy lifting can transiently reduce force output."
+  strength: moderate
+  citations:
+    - {pmid: "19996770", title: "Effects of warming-up on physical performance: a systematic review with meta-analysis"}
+
+- slug: pain-modification
+  topic: pain_management
+  goal_tags: [muscle_gain, general_fitness]
+  claim: "Mild-to-moderate exercise-related pain (roughly 0–3/10) is acceptable and can be trained through; ≥ 4/10 warrants exercise modification; ≥ 6/10 or persistent pain warrants stopping and consulting a clinician."
+  detail: "For chronic musculoskeletal pain, painful exercise can produce similar or better outcomes than pain-free exercise short-term; this does not extend to acute injuries or worsening pain."
+  strength: moderate
+  citations:
+    - {pmid: "28596288", title: "Should exercises be painful in the management of chronic musculoskeletal pain?"}
+
+- slug: deload
+  topic: deload
+  goal_tags: [muscle_gain, strength]
+  claim: "Scheduled or symptom-driven deload weeks (reduced volume and load, higher RIR) periodically improve long-term progress; the exact protocol is individual."
+  detail: "Signs prompting a deload include stalled progress on multiple lifts, persistent high RPE at the same load, and poor readiness (sleep, energy). Typical deload: load −10 %, sets −50 %, target RIR 3–4."
+  strength: expert_opinion
+
+- slug: sleep-recovery
+  topic: recovery
+  goal_tags: [muscle_gain, strength]
+  claim: "Short sleep (< 6 h/night) chronically impairs strength and hypertrophy outcomes; ≥ 7 h/night is a reasonable target."
+  detail: "Sleep restriction reduces protein synthesis, testosterone, and next-day training capacity."
+  strength: moderate
+
+- slug: cardio-integration
+  topic: exercise_selection
+  goal_tags: [fat_loss, general_fitness]
+  claim: "Low-intensity steady-state (~30–60 min brisk walking or Zone-2) 2–4×/week complements resistance training for fat loss with minimal interference."
+  detail: "High-volume high-intensity concurrent training can blunt strength/hypertrophy; low-intensity walking or Zone-2 does not."
+  strength: moderate

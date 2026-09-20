@@ -1,0 +1,551 @@
+# Kinetiq exercise seed library.
+# Each entry produces one row in `exercises` and rows in `exercise_aliases`.
+# `selection_scores` are 1-5 by goal (used by compare_exercises); values are
+# rules-of-thumb by movement-science consensus, not gospel. Every entry with
+# specific claim text carries a citation elsewhere (principles.yaml + inline
+# evidence_summary sentences); citations here are optional.
+# ---------------------------------------------------------------------------
+
+- slug: barbell-bench-press
+  name: Barbell Bench Press
+  movement_pattern: horizontal_push
+  equipment: barbell
+  load_type: external
+  laterality: bilateral
+  primary_muscles: [chest]
+  secondary_muscles: [triceps, front_delts]
+  is_compound: true
+  default_increment_kg: 2.5
+  default_rest_s: 180
+  aliases: [bench, bench press, bb bench, flat bench, barbell bench]
+  cues: "Squeeze scapulae, feet planted, mild arch; bar-path from mid-chest to shoulders."
+  contraindication_tags: [shoulder_impingement, wrist_flexion_pain]
+  evidence_summary: "Compound press with high loading potential; strong hypertrophy for chest with heavy sets and moderate reps."
+  selection_scores: {muscle_gain: 5, strength: 5, fat_loss: 3, general_fitness: 4}
+
+- slug: incline-barbell-bench-press
+  name: Incline Barbell Bench Press
+  movement_pattern: incline_push
+  equipment: barbell
+  load_type: external
+  primary_muscles: [chest, front_delts]
+  secondary_muscles: [triceps]
+  is_compound: true
+  default_increment_kg: 2.5
+  default_rest_s: 150
+  aliases: [incline bench, incline press, incline barbell]
+  cues: "Bench angle ~30°; keep elbows moderate to protect the shoulder."
+  contraindication_tags: [shoulder_impingement]
+  selection_scores: {muscle_gain: 5, strength: 4, fat_loss: 3, general_fitness: 4}
+
+- slug: dumbbell-bench-press
+  name: Dumbbell Bench Press
+  movement_pattern: horizontal_push
+  equipment: dumbbell
+  load_type: external
+  primary_muscles: [chest]
+  secondary_muscles: [triceps, front_delts]
+  is_compound: true
+  default_increment_kg: 2.0
+  default_rest_s: 150
+  aliases: [db bench, db press, dumbbell press, dumbell bench press]
+  cues: "Stack the shoulder; slow eccentric; deep stretch at the bottom."
+  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 3, general_fitness: 4}
+
+- slug: incline-dumbbell-press
+  name: Incline Dumbbell Press
+  movement_pattern: incline_push
+  equipment: dumbbell
+  load_type: external
+  primary_muscles: [chest, front_delts]
+  secondary_muscles: [triceps]
+  is_compound: true
+  default_increment_kg: 2.0
+  default_rest_s: 150
+  aliases: [incline db press, incline db bench, db incline]
+  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 3, general_fitness: 4}
+
+- slug: machine-chest-press
+  name: Machine Chest Press
+  movement_pattern: horizontal_push
+  equipment: machine
+  load_type: external
+  primary_muscles: [chest]
+  secondary_muscles: [triceps, front_delts]
+  is_compound: true
+  default_increment_kg: 5.0
+  default_rest_s: 120
+  aliases: [chest press machine, seated chest press, hammer press]
+  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 4, general_fitness: 5}
+
+- slug: cable-fly
+  name: Cable Fly
+  movement_pattern: horizontal_push
+  equipment: cable
+  load_type: external
+  primary_muscles: [chest]
+  secondary_muscles: [front_delts]
+  is_compound: false
+  default_increment_kg: 2.5
+  default_rest_s: 75
+  aliases: [cable flies, cable crossover, chest fly cable]
+  selection_scores: {muscle_gain: 4, strength: 2, fat_loss: 3, general_fitness: 3}
+
+- slug: push-up
+  name: Push-Up
+  movement_pattern: horizontal_push
+  equipment: bodyweight
+  load_type: bodyweight
+  bodyweight_load_factor: 0.64
+  primary_muscles: [chest]
+  secondary_muscles: [triceps, front_delts, abs]
+  is_compound: true
+  default_increment_kg: 2.5
+  default_rest_s: 60
+  aliases: [pushup, pushups, push up]
+  selection_scores: {muscle_gain: 3, strength: 2, fat_loss: 4, general_fitness: 5}
+
+- slug: overhead-press
+  name: Overhead Press
+  movement_pattern: vertical_push
+  equipment: barbell
+  load_type: external
+  primary_muscles: [front_delts]
+  secondary_muscles: [triceps, side_delts, upper_back, abs]
+  is_compound: true
+  default_increment_kg: 2.5
+  default_rest_s: 180
+  aliases: [ohp, standing press, military press]
+  contraindication_tags: [shoulder_impingement, low_back_extension_pain]
+  selection_scores: {muscle_gain: 4, strength: 5, fat_loss: 3, general_fitness: 4}
+
+- slug: dumbbell-shoulder-press
+  name: Dumbbell Shoulder Press
+  movement_pattern: vertical_push
+  equipment: dumbbell
+  load_type: external
+  primary_muscles: [front_delts]
+  secondary_muscles: [triceps, side_delts]
+  is_compound: true
+  default_increment_kg: 2.0
+  default_rest_s: 120
+  aliases: [db shoulder press, seated db press, db overhead press]
+  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 4}
+
+- slug: dumbbell-lateral-raise
+  name: Dumbbell Lateral Raise
+  movement_pattern: shoulder_isolation
+  equipment: dumbbell
+  load_type: external
+  primary_muscles: [side_delts]
+  secondary_muscles: []
+  is_compound: false
+  default_increment_kg: 1.0
+  default_rest_s: 60
+  aliases: [lateral raise, side raise, db lateral raise, side laterals]
+  selection_scores: {muscle_gain: 5, strength: 2, fat_loss: 3, general_fitness: 3}
+
+- slug: cable-lateral-raise
+  name: Cable Lateral Raise
+  movement_pattern: shoulder_isolation
+  equipment: cable
+  load_type: external
+  primary_muscles: [side_delts]
+  is_compound: false
+  default_increment_kg: 2.5
+  default_rest_s: 60
+  aliases: [cable side raise]
+  selection_scores: {muscle_gain: 5, strength: 2, fat_loss: 3, general_fitness: 3}
+
+- slug: rear-delt-flye
+  name: Rear Delt Flye
+  movement_pattern: shoulder_isolation
+  equipment: dumbbell
+  load_type: external
+  primary_muscles: [rear_delts]
+  secondary_muscles: [upper_back]
+  is_compound: false
+  default_increment_kg: 1.0
+  default_rest_s: 60
+  aliases: [rear delt fly, bent-over fly, reverse fly]
+  selection_scores: {muscle_gain: 4, strength: 1, fat_loss: 2, general_fitness: 3}
+
+- slug: barbell-row
+  name: Barbell Row
+  movement_pattern: horizontal_pull
+  equipment: barbell
+  load_type: external
+  primary_muscles: [lats, upper_back]
+  secondary_muscles: [rear_delts, biceps]
+  is_compound: true
+  default_increment_kg: 2.5
+  default_rest_s: 150
+  aliases: [bb row, bent-over row, pendlay row]
+  contraindication_tags: [low_back_pain]
+  selection_scores: {muscle_gain: 5, strength: 4, fat_loss: 3, general_fitness: 4}
+
+- slug: dumbbell-row
+  name: Dumbbell Row
+  movement_pattern: horizontal_pull
+  equipment: dumbbell
+  load_type: external
+  laterality: unilateral
+  primary_muscles: [lats, upper_back]
+  secondary_muscles: [biceps, rear_delts]
+  is_compound: true
+  default_increment_kg: 2.0
+  default_rest_s: 90
+  aliases: [db row, one-arm db row, single-arm row]
+  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 4}
+
+- slug: seated-cable-row
+  name: Seated Cable Row
+  movement_pattern: horizontal_pull
+  equipment: cable
+  load_type: external
+  primary_muscles: [lats, upper_back]
+  secondary_muscles: [biceps, rear_delts]
+  is_compound: true
+  default_increment_kg: 2.5
+  default_rest_s: 90
+  aliases: [cable row, seated row, low row]
+  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 5}
+
+- slug: chest-supported-row
+  name: Chest-Supported Row
+  movement_pattern: horizontal_pull
+  equipment: machine
+  load_type: external
+  primary_muscles: [upper_back, lats]
+  secondary_muscles: [rear_delts, biceps]
+  is_compound: true
+  default_increment_kg: 5.0
+  default_rest_s: 90
+  aliases: [chest supported row, seal row, prone row]
+  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 3, general_fitness: 4}
+
+- slug: lat-pulldown
+  name: Lat Pulldown
+  movement_pattern: vertical_pull
+  equipment: cable
+  load_type: external
+  primary_muscles: [lats]
+  secondary_muscles: [biceps, upper_back]
+  is_compound: true
+  default_increment_kg: 2.5
+  default_rest_s: 90
+  aliases: [lat pd, pulldown, lat pull down, cable pulldown]
+  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 3, general_fitness: 4}
+
+- slug: pull-up
+  name: Pull-Up
+  movement_pattern: vertical_pull
+  equipment: bodyweight
+  load_type: bodyweight_plus
+  bodyweight_load_factor: 1.0
+  primary_muscles: [lats]
+  secondary_muscles: [biceps, upper_back]
+  is_compound: true
+  default_increment_kg: 2.5
+  default_rest_s: 120
+  aliases: [pullup, pullups, pull up]
+  selection_scores: {muscle_gain: 4, strength: 4, fat_loss: 3, general_fitness: 5}
+
+- slug: chin-up
+  name: Chin-Up
+  movement_pattern: vertical_pull
+  equipment: bodyweight
+  load_type: bodyweight_plus
+  bodyweight_load_factor: 1.0
+  primary_muscles: [lats, biceps]
+  secondary_muscles: [upper_back]
+  is_compound: true
+  default_increment_kg: 2.5
+  default_rest_s: 120
+  aliases: [chinup, chin ups, chin up]
+  selection_scores: {muscle_gain: 5, strength: 4, fat_loss: 3, general_fitness: 4}
+
+- slug: barbell-back-squat
+  name: Barbell Back Squat
+  movement_pattern: squat
+  equipment: barbell
+  load_type: external
+  primary_muscles: [quads, glutes]
+  secondary_muscles: [hamstrings, lower_back, abs]
+  is_compound: true
+  default_increment_kg: 5.0
+  default_rest_s: 240
+  aliases: [back squat, high-bar squat, low-bar squat]
+  contraindication_tags: [knee_deep_flexion_pain, low_back_flexion_load]
+  selection_scores: {muscle_gain: 5, strength: 5, fat_loss: 3, general_fitness: 4}
+
+- slug: front-squat
+  name: Front Squat
+  movement_pattern: squat
+  equipment: barbell
+  load_type: external
+  primary_muscles: [quads]
+  secondary_muscles: [glutes, upper_back, abs]
+  is_compound: true
+  default_increment_kg: 2.5
+  default_rest_s: 210
+  aliases: [front squat, fs]
+  contraindication_tags: [wrist_flexion_pain, knee_deep_flexion_pain]
+  selection_scores: {muscle_gain: 4, strength: 4, fat_loss: 3, general_fitness: 3}
+
+- slug: leg-press
+  name: Leg Press
+  movement_pattern: squat
+  equipment: machine
+  load_type: external
+  primary_muscles: [quads, glutes]
+  secondary_muscles: [hamstrings]
+  is_compound: true
+  default_increment_kg: 10.0
+  default_rest_s: 150
+  aliases: [45 leg press, incline leg press]
+  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 4, general_fitness: 4}
+
+- slug: goblet-squat
+  name: Goblet Squat
+  movement_pattern: squat
+  equipment: dumbbell
+  load_type: external
+  primary_muscles: [quads, glutes]
+  secondary_muscles: [abs, hamstrings]
+  is_compound: true
+  default_increment_kg: 2.0
+  default_rest_s: 90
+  aliases: [db goblet squat, kettlebell goblet squat]
+  selection_scores: {muscle_gain: 3, strength: 2, fat_loss: 3, general_fitness: 5}
+
+- slug: romanian-deadlift
+  name: Romanian Deadlift
+  movement_pattern: hinge
+  equipment: barbell
+  load_type: external
+  primary_muscles: [hamstrings, glutes]
+  secondary_muscles: [lower_back, upper_back]
+  is_compound: true
+  default_increment_kg: 5.0
+  default_rest_s: 180
+  aliases: [rdl, barbell rdl, romanian deadlifts]
+  contraindication_tags: [low_back_pain]
+  selection_scores: {muscle_gain: 5, strength: 4, fat_loss: 3, general_fitness: 4}
+
+- slug: dumbbell-romanian-deadlift
+  name: Dumbbell Romanian Deadlift
+  movement_pattern: hinge
+  equipment: dumbbell
+  load_type: external
+  primary_muscles: [hamstrings, glutes]
+  secondary_muscles: [lower_back]
+  is_compound: true
+  default_increment_kg: 2.0
+  default_rest_s: 120
+  aliases: [db rdl, dumbbell rdl]
+  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 4}
+
+- slug: deadlift
+  name: Conventional Deadlift
+  movement_pattern: hinge
+  equipment: barbell
+  load_type: external
+  primary_muscles: [glutes, hamstrings, lower_back]
+  secondary_muscles: [upper_back, traps, forearms]
+  is_compound: true
+  default_increment_kg: 5.0
+  default_rest_s: 300
+  aliases: [conventional deadlift, dl, deadlifts]
+  contraindication_tags: [low_back_pain]
+  selection_scores: {muscle_gain: 4, strength: 5, fat_loss: 3, general_fitness: 3}
+
+- slug: hip-thrust
+  name: Barbell Hip Thrust
+  movement_pattern: hip_thrust
+  equipment: barbell
+  load_type: external
+  primary_muscles: [glutes]
+  secondary_muscles: [hamstrings]
+  is_compound: true
+  default_increment_kg: 5.0
+  default_rest_s: 150
+  aliases: [hip thrust, bb hip thrust]
+  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 3, general_fitness: 3}
+
+- slug: walking-lunge
+  name: Walking Lunge
+  movement_pattern: lunge
+  equipment: dumbbell
+  load_type: external
+  laterality: alternating
+  primary_muscles: [quads, glutes]
+  secondary_muscles: [hamstrings, adductors]
+  is_compound: true
+  default_increment_kg: 2.0
+  default_rest_s: 90
+  aliases: [walking lunges, db walking lunge]
+  selection_scores: {muscle_gain: 3, strength: 3, fat_loss: 4, general_fitness: 4}
+
+- slug: bulgarian-split-squat
+  name: Bulgarian Split Squat
+  movement_pattern: lunge
+  equipment: dumbbell
+  load_type: external
+  laterality: unilateral
+  primary_muscles: [quads, glutes]
+  secondary_muscles: [hamstrings, adductors]
+  is_compound: true
+  default_increment_kg: 2.0
+  default_rest_s: 90
+  aliases: [bulgarian split squat, split squat, rfess]
+  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 4}
+
+- slug: leg-curl
+  name: Seated Leg Curl
+  movement_pattern: leg_isolation
+  equipment: machine
+  load_type: external
+  primary_muscles: [hamstrings]
+  is_compound: false
+  default_increment_kg: 2.5
+  default_rest_s: 75
+  aliases: [seated leg curl, lying leg curl, hamstring curl]
+  selection_scores: {muscle_gain: 5, strength: 2, fat_loss: 3, general_fitness: 3}
+
+- slug: leg-extension
+  name: Leg Extension
+  movement_pattern: leg_isolation
+  equipment: machine
+  load_type: external
+  primary_muscles: [quads]
+  is_compound: false
+  default_increment_kg: 2.5
+  default_rest_s: 75
+  aliases: [quad extension]
+  selection_scores: {muscle_gain: 4, strength: 1, fat_loss: 2, general_fitness: 3}
+
+- slug: standing-calf-raise
+  name: Standing Calf Raise
+  movement_pattern: calf
+  equipment: machine
+  load_type: external
+  primary_muscles: [calves]
+  is_compound: false
+  default_increment_kg: 2.5
+  default_rest_s: 60
+  aliases: [calf raise, calves, standing calf]
+  selection_scores: {muscle_gain: 4, strength: 2, fat_loss: 2, general_fitness: 3}
+
+- slug: barbell-curl
+  name: Barbell Curl
+  movement_pattern: arm_flexion
+  equipment: barbell
+  load_type: external
+  primary_muscles: [biceps]
+  secondary_muscles: [forearms]
+  is_compound: false
+  default_increment_kg: 1.25
+  default_rest_s: 75
+  aliases: [bb curl, ez bar curl]
+  selection_scores: {muscle_gain: 4, strength: 2, fat_loss: 2, general_fitness: 3}
+
+- slug: dumbbell-curl
+  name: Dumbbell Curl
+  movement_pattern: arm_flexion
+  equipment: dumbbell
+  load_type: external
+  primary_muscles: [biceps]
+  secondary_muscles: [forearms]
+  is_compound: false
+  default_increment_kg: 1.0
+  default_rest_s: 60
+  aliases: [db curl, dumbell curl, alternating db curl]
+  selection_scores: {muscle_gain: 4, strength: 1, fat_loss: 2, general_fitness: 3}
+
+- slug: cable-triceps-pushdown
+  name: Cable Triceps Pushdown
+  movement_pattern: arm_extension
+  equipment: cable
+  load_type: external
+  primary_muscles: [triceps]
+  is_compound: false
+  default_increment_kg: 2.5
+  default_rest_s: 60
+  aliases: [triceps pushdown, tricep pushdown, cable pushdown]
+  selection_scores: {muscle_gain: 4, strength: 2, fat_loss: 3, general_fitness: 3}
+
+- slug: overhead-triceps-extension
+  name: Overhead Triceps Extension
+  movement_pattern: arm_extension
+  equipment: cable
+  load_type: external
+  primary_muscles: [triceps]
+  is_compound: false
+  default_increment_kg: 2.5
+  default_rest_s: 60
+  aliases: [overhead tricep extension, cable overhead extension, french press]
+  selection_scores: {muscle_gain: 5, strength: 2, fat_loss: 3, general_fitness: 3}
+
+- slug: plank
+  name: Plank
+  movement_pattern: core_anti_extension
+  equipment: bodyweight
+  load_type: time
+  primary_muscles: [abs, obliques]
+  is_compound: false
+  default_increment_kg: 0.0
+  default_rest_s: 45
+  aliases: [front plank, forearm plank]
+  selection_scores: {muscle_gain: 2, strength: 3, fat_loss: 3, general_fitness: 4}
+
+- slug: hanging-leg-raise
+  name: Hanging Leg Raise
+  movement_pattern: core_flexion
+  equipment: bodyweight
+  load_type: bodyweight
+  bodyweight_load_factor: 0.5
+  primary_muscles: [abs]
+  secondary_muscles: [hip_flexors, forearms]
+  is_compound: false
+  default_increment_kg: 2.5
+  default_rest_s: 75
+  aliases: [hanging leg raise, hlr, hanging knee raise]
+  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 4}
+
+- slug: incline-walk
+  name: Incline Treadmill Walk
+  movement_pattern: conditioning
+  equipment: machine
+  load_type: time
+  primary_muscles: [cardiovascular]
+  secondary_muscles: [calves, glutes]
+  is_compound: true
+  default_increment_kg: 0.0
+  default_rest_s: 0
+  aliases: [treadmill incline walk, incline walk, 12/3/30]
+  selection_scores: {muscle_gain: 1, strength: 1, fat_loss: 5, general_fitness: 5}
+
+- slug: stationary-bike
+  name: Stationary Bike (Steady)
+  movement_pattern: conditioning
+  equipment: machine
+  load_type: time
+  primary_muscles: [cardiovascular]
+  secondary_muscles: [quads]
+  is_compound: true
+  default_increment_kg: 0.0
+  aliases: [bike, exercise bike, stationary bicycle]
+  selection_scores: {muscle_gain: 1, strength: 1, fat_loss: 4, general_fitness: 5, endurance: 5}
+
+- slug: rowing-machine
+  name: Rowing Machine
+  movement_pattern: conditioning
+  equipment: machine
+  load_type: time
+  primary_muscles: [cardiovascular]
+  secondary_muscles: [lats, upper_back, quads]
+  is_compound: true
+  default_increment_kg: 0.0
+  aliases: [rower, erg, concept 2]
+  selection_scores: {muscle_gain: 1, strength: 1, fat_loss: 5, general_fitness: 5, endurance: 5}

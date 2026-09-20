@@ -1,0 +1,78 @@
+# Preferred substitutes when an exercise is contraindicated for a body region
+# or the user lacks the equipment. Reasons match `exercise_substitutions.reason`.
+# `from` and `to` are exercise slugs. The seed_loader is idempotent.
+
+- from: barbell-bench-press
+  to: dumbbell-bench-press
+  reason: shoulder_pain
+  rank: 1
+
+- from: barbell-bench-press
+  to: machine-chest-press
+  reason: shoulder_pain
+  rank: 2
+
+- from: incline-barbell-bench-press
+  to: incline-dumbbell-press
+  reason: shoulder_pain
+  rank: 1
+
+- from: overhead-press
+  to: dumbbell-shoulder-press
+  reason: shoulder_pain
+  rank: 1
+
+- from: overhead-press
+  to: machine-chest-press
+  reason: shoulder_pain
+  rank: 2
+
+- from: barbell-row
+  to: chest-supported-row
+  reason: low_back_pain
+  rank: 1
+
+- from: barbell-row
+  to: seated-cable-row
+  reason: low_back_pain
+  rank: 2
+
+- from: deadlift
+  to: romanian-deadlift
+  reason: low_back_pain
+  rank: 1
+
+- from: deadlift
+  to: leg-press
+  reason: low_back_pain
+  rank: 2
+
+- from: romanian-deadlift
+  to: dumbbell-romanian-deadlift
+  reason: low_back_pain
+  rank: 1
+
+- from: barbell-back-squat
+  to: leg-press
+  reason: knee_pain
+  rank: 1
+
+- from: barbell-back-squat
+  to: goblet-squat
+  reason: knee_pain
+  rank: 2
+
+- from: front-squat
+  to: goblet-squat
+  reason: wrist_pain
+  rank: 1
+
+- from: pull-up
+  to: lat-pulldown
+  reason: variation
+  rank: 1
+
+- from: incline-dumbbell-press
+  to: incline-barbell-bench-press
+  reason: variation
+  rank: 1

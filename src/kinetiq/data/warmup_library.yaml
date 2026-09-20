@@ -1,0 +1,29 @@
+# Small library of muscle-specific warm-up drills. The engine picks 2-3 per session.
+
+chest:
+  - "band pull-apart × 15"
+  - "scap push-up × 8"
+  - "wall slide × 10"
+front_delts:
+  - "band external rotation × 10/side"
+  - "wall slide × 10"
+side_delts:
+  - "band lateral raise × 15"
+lats:
+  - "dead hang × 20 s"
+  - "scap pull-up × 5"
+upper_back:
+  - "band pull-apart × 15"
+  - "prone Y × 10"
+quads:
+  - "bodyweight squat × 10"
+  - "leg swing × 10/side"
+glutes:
+  - "glute bridge × 10"
+  - "monster walk × 10/side"
+hamstrings:
+  - "hip-hinge to wall × 10"
+  - "leg swing × 10/side"
+abs:
+  - "dead bug × 8/side"
+  - "hollow hold × 20 s"
