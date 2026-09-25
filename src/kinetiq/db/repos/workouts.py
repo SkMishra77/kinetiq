@@ -1,7 +1,7 @@
 """Workout / workout_exercises / sets SQL + a few analysis-adjacent queries."""
 from __future__ import annotations
+
 import json
-from typing import Any
 
 from ..connection import Database
 
@@ -141,6 +141,32 @@ def workouts_since(db: Database, since: str | None = None, limit: int = 20) -> l
         rows = db.execute("SELECT * FROM workouts WHERE status <> 'voided' "
                           "ORDER BY performed_on DESC LIMIT ?", (limit,)).fetchall()
     return [dict(r) for r in rows]
+
+
+def weekly_volume_entries(db: Database) -> list[dict]:
+    """Return per-exercise entries for the last 7 days, shaped for ``weekly_hard_sets()``."""
+    rows = db.execute(
+        """SELECT e.primary_muscles, e.secondary_muscles,
+                  COUNT(DISTINCT s.id) FILTER (WHERE s.is_warmup=0) AS working_sets
+           FROM workout_exercises we
+             JOIN workouts w ON w.id=we.workout_id
+             JOIN exercises e ON e.id=we.exercise_id
+             LEFT JOIN sets s ON s.workout_exercise_id=we.id
+           WHERE w.status IN ('completed','partial')
+             AND w.performed_on >= date('now','-7 days')
+             AND we.skipped=0
+           GROUP BY we.id""",
+    ).fetchall()
+    entries: list[dict] = []
+    for r in rows:
+        primary = json.loads(r["primary_muscles"]) if isinstance(r["primary_muscles"], str) else (r["primary_muscles"] or [])
+        secondary = json.loads(r["secondary_muscles"]) if isinstance(r["secondary_muscles"], str) else (r["secondary_muscles"] or [])
+        entries.append({
+            "primary": primary,
+            "secondary": secondary,
+            "working_sets": r["working_sets"],
+        })
+    return entries
 
 
 def days_since_muscle(db: Database, tz: str | None = None) -> dict[str, int]:

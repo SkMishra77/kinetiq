@@ -2,6 +2,9 @@
 # or the user lacks the equipment. Reasons match `exercise_substitutions.reason`.
 # `from` and `to` are exercise slugs. The seed_loader is idempotent.
 
+# ============================================================================
+# SHOULDER PAIN
+# ============================================================================
 - from: barbell-bench-press
   to: dumbbell-bench-press
   reason: shoulder_pain
@@ -27,6 +30,24 @@
   reason: shoulder_pain
   rank: 2
 
+- from: dumbbell-lateral-raise
+  to: cable-lateral-raise
+  reason: shoulder_pain
+  rank: 1
+
+- from: pull-up
+  to: lat-pulldown
+  reason: shoulder_pain
+  rank: 1
+
+- from: chin-up
+  to: lat-pulldown
+  reason: shoulder_pain
+  rank: 1
+
+# ============================================================================
+# LOW BACK PAIN
+# ============================================================================
 - from: barbell-row
   to: chest-supported-row
   reason: low_back_pain
@@ -54,6 +75,24 @@
 
 - from: barbell-back-squat
   to: leg-press
+  reason: low_back_pain
+  rank: 1
+
+- from: barbell-back-squat
+  to: goblet-squat
+  reason: low_back_pain
+  rank: 2
+
+- from: walking-lunge
+  to: bulgarian-split-squat
+  reason: low_back_pain
+  rank: 1
+
+# ============================================================================
+# KNEE PAIN
+# ============================================================================
+- from: barbell-back-squat
+  to: leg-press
   reason: knee_pain
   rank: 1
 
@@ -63,16 +102,272 @@
   rank: 2
 
 - from: front-squat
+  to: leg-press
+  reason: knee_pain
+  rank: 1
+
+- from: leg-extension
+  to: leg-press
+  reason: knee_pain
+  rank: 1
+
+- from: walking-lunge
+  to: hip-thrust
+  reason: knee_pain
+  rank: 1
+
+- from: bulgarian-split-squat
+  to: hip-thrust
+  reason: knee_pain
+  rank: 1
+
+# ============================================================================
+# WRIST PAIN
+# ============================================================================
+- from: front-squat
   to: goblet-squat
   reason: wrist_pain
   rank: 1
 
+- from: barbell-bench-press
+  to: machine-chest-press
+  reason: wrist_pain
+  rank: 1
+
+- from: barbell-curl
+  to: dumbbell-curl
+  reason: wrist_pain
+  rank: 1
+
+- from: overhead-press
+  to: machine-chest-press
+  reason: wrist_pain
+  rank: 1
+
+# ============================================================================
+# ELBOW PAIN
+# ============================================================================
+- from: barbell-curl
+  to: dumbbell-curl
+  reason: elbow_pain
+  rank: 1
+
+- from: cable-triceps-pushdown
+  to: overhead-triceps-extension
+  reason: elbow_pain
+  rank: 1
+
+- from: chin-up
+  to: lat-pulldown
+  reason: elbow_pain
+  rank: 1
+
+- from: pull-up
+  to: lat-pulldown
+  reason: elbow_pain
+  rank: 1
+
+# ============================================================================
+# EQUIPMENT UNAVAILABLE -- barbell to dumbbell
+# ============================================================================
+- from: barbell-bench-press
+  to: dumbbell-bench-press
+  reason: no_barbell
+  rank: 1
+
+- from: incline-barbell-bench-press
+  to: incline-dumbbell-press
+  reason: no_barbell
+  rank: 1
+
+- from: overhead-press
+  to: dumbbell-shoulder-press
+  reason: no_barbell
+  rank: 1
+
+- from: barbell-row
+  to: dumbbell-row
+  reason: no_barbell
+  rank: 1
+
+- from: barbell-back-squat
+  to: goblet-squat
+  reason: no_barbell
+  rank: 1
+
+- from: front-squat
+  to: goblet-squat
+  reason: no_barbell
+  rank: 1
+
+- from: deadlift
+  to: dumbbell-romanian-deadlift
+  reason: no_barbell
+  rank: 1
+
+- from: romanian-deadlift
+  to: dumbbell-romanian-deadlift
+  reason: no_barbell
+  rank: 1
+
+- from: barbell-curl
+  to: dumbbell-curl
+  reason: no_barbell
+  rank: 1
+
+- from: hip-thrust
+  to: walking-lunge
+  reason: no_barbell
+  rank: 1
+
+# ============================================================================
+# EQUIPMENT UNAVAILABLE -- machine to dumbbell/bodyweight
+# ============================================================================
+- from: leg-press
+  to: goblet-squat
+  reason: no_machine
+  rank: 1
+
+- from: leg-press
+  to: bulgarian-split-squat
+  reason: no_machine
+  rank: 2
+
+- from: machine-chest-press
+  to: dumbbell-bench-press
+  reason: no_machine
+  rank: 1
+
+- from: machine-chest-press
+  to: push-up
+  reason: no_machine
+  rank: 2
+
+- from: leg-curl
+  to: dumbbell-romanian-deadlift
+  reason: no_machine
+  rank: 1
+
+- from: leg-extension
+  to: goblet-squat
+  reason: no_machine
+  rank: 1
+
+- from: standing-calf-raise
+  to: walking-lunge
+  reason: no_machine
+  rank: 1
+
+# ============================================================================
+# EQUIPMENT UNAVAILABLE -- cable to band/dumbbell
+# ============================================================================
+- from: cable-fly
+  to: dumbbell-bench-press
+  reason: no_cable
+  rank: 1
+
+- from: cable-fly
+  to: push-up
+  reason: no_cable
+  rank: 2
+
+- from: cable-lateral-raise
+  to: dumbbell-lateral-raise
+  reason: no_cable
+  rank: 1
+
+- from: cable-triceps-pushdown
+  to: overhead-triceps-extension
+  reason: no_cable
+  rank: 1
+
+- from: seated-cable-row
+  to: dumbbell-row
+  reason: no_cable
+  rank: 1
+
+- from: lat-pulldown
+  to: pull-up
+  reason: no_cable
+  rank: 1
+
+- from: lat-pulldown
+  to: chin-up
+  reason: no_cable
+  rank: 2
+
+# ============================================================================
+# UNILATERAL ALTERNATIVES
+# ============================================================================
+- from: barbell-back-squat
+  to: bulgarian-split-squat
+  reason: unilateral
+  rank: 1
+
+- from: leg-press
+  to: bulgarian-split-squat
+  reason: unilateral
+  rank: 1
+
+- from: barbell-row
+  to: dumbbell-row
+  reason: unilateral
+  rank: 1
+
+- from: barbell-bench-press
+  to: dumbbell-bench-press
+  reason: unilateral
+  rank: 1
+
+- from: romanian-deadlift
+  to: dumbbell-romanian-deadlift
+  reason: unilateral
+  rank: 1
+
+# ============================================================================
+# VARIATION (exercise rotation / plateau busting)
+# ============================================================================
 - from: pull-up
   to: lat-pulldown
   reason: variation
   rank: 1
 
+- from: chin-up
+  to: pull-up
+  reason: variation
+  rank: 1
+
 - from: incline-dumbbell-press
   to: incline-barbell-bench-press
+  reason: variation
+  rank: 1
+
+- from: barbell-bench-press
+  to: incline-barbell-bench-press
+  reason: variation
+  rank: 1
+
+- from: barbell-back-squat
+  to: front-squat
+  reason: variation
+  rank: 1
+
+- from: deadlift
+  to: romanian-deadlift
+  reason: variation
+  rank: 1
+
+- from: barbell-row
+  to: chest-supported-row
+  reason: variation
+  rank: 1
+
+- from: dumbbell-curl
+  to: barbell-curl
+  reason: variation
+  rank: 1
+
+- from: overhead-press
+  to: dumbbell-shoulder-press
   reason: variation
   rank: 1

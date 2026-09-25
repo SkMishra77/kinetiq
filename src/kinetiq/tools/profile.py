@@ -1,19 +1,20 @@
 """save_profile, log_checkin, log_pain_or_injury tools."""
 from __future__ import annotations
+
 from typing import Annotated
 
 from fastmcp import FastMCP
 from fastmcp.exceptions import ToolError
-from pydantic import Field
 from mcp.types import ToolAnnotations
+from pydantic import Field
 
-from ..services import Services
-from ..domain.models import ProfileUpdate, WellnessInput
-from ..domain.dates import parse_date, iso_utc
-from ..db.repos import profile as pr
-from ..db.repos import exercises as exr
 from ..db.repos import checkins as ck
+from ..db.repos import exercises as exr
 from ..db.repos import issues as iss
+from ..db.repos import profile as pr
+from ..domain.dates import iso_utc, parse_date
+from ..domain.models import ProfileUpdate
+from ..services import Services
 
 
 def register(mcp: FastMCP, svc: Services) -> None:
@@ -212,6 +213,78 @@ def register(mcp: FastMCP, svc: Services) -> None:
             raise ToolError("resolve requires issue_id")
         iss.update_issue(svc.db, issue_id, status="resolved")
         return {"issue_id": issue_id, "status": "resolved"}
+
+    @mcp.tool(
+        name="get_body_trends",
+        description=(
+            "Return body weight, body fat %, and measurement trends over time. "
+            "Use when the user asks 'how has my weight changed', 'show my body "
+            "composition progress', or 'what are my measurements'. Returns "
+            "time-series data points and summary statistics."
+        ),
+        annotations=ToolAnnotations(
+            title="Get Body Trends", readOnlyHint=True, destructiveHint=False,
+            idempotentHint=True, openWorldHint=False,
+        ),
+    )
+    def get_body_trends(
+        days: Annotated[int, Field(default=90, ge=7, le=365,
+            description="Look-back window in days.")] = 90,
+    ) -> dict:
+        return pr.body_composition_trend(svc.db, days=days)
+
+    @mcp.tool(
+        name="get_physique_report",
+        description=(
+            "Evaluate body proportions against the user's aesthetic goal "
+            "(aesthetic_vtaper, aesthetic_balanced, classic_physique). Returns "
+            "measurement ratios (shoulder-to-waist, chest-to-waist, calf-to-arm), "
+            "a proportionality score 0-100, lagging body parts with volume "
+            "adjustment suggestions, and left-right symmetry issues. Requires "
+            "body measurements in the profile. Use when the user asks about "
+            "their physique balance, proportions, or V-taper progress."
+        ),
+        annotations=ToolAnnotations(
+            title="Get Physique Report", readOnlyHint=True, destructiveHint=False,
+            idempotentHint=True, openWorldHint=False,
+        ),
+    )
+    def get_physique_report(
+        goal: Annotated[str | None, Field(default=None,
+            description="Override goal; defaults to profile primary_goal.")] = None,
+    ) -> dict:
+        from ..engine.proportions import assess_proportions
+        from ..engine.thresholds import AESTHETIC_VOLUME_PRIORITIES
+
+        measurements = pr.latest_measurements(svc.db)
+        if not measurements:
+            raise ToolError(
+                "No body measurements on file. Ask the user to provide "
+                "measurements (shoulders, waist, chest, arms, etc.) via save_profile."
+            )
+
+        effective_goal = goal
+        if not effective_goal:
+            prof = pr.profile_snapshot(svc.db)
+            effective_goal = prof.get("primary_goal") or "aesthetic_balanced"
+        if effective_goal not in AESTHETIC_VOLUME_PRIORITIES:
+            effective_goal = "aesthetic_balanced"
+
+        report = assess_proportions(measurements, effective_goal)
+        return {
+            "goal": report.goal,
+            "score": report.score,
+            "ratios": report.ratios,
+            "targets": report.targets,
+            "lagging": [
+                {"muscles": lp.muscles, "ratio": lp.ratio_name,
+                 "current": lp.current, "target": lp.target,
+                 "gap_pct": lp.gap_pct, "suggestion": lp.suggestion}
+                for lp in report.lagging
+            ],
+            "symmetry_issues": report.symmetry_issues,
+            "measurements_used": measurements,
+        }
 
 
 def _profile_echo(prof: dict, changed: list[str]) -> str:

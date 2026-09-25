@@ -1,10 +1,11 @@
 """Exercise library repo."""
 from __future__ import annotations
+
 import json
 from typing import Any
 
+from ...parsing.aliases import Resolution, normalise, resolve
 from ..connection import Database
-from ...parsing.aliases import normalise, resolve, Resolution
 
 
 def all_exercises(db: Database, include_deleted: bool = False) -> list[dict]:

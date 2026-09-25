@@ -1,5 +1,6 @@
 """Pain response rules — never diagnostic, only decision heuristics."""
 from __future__ import annotations
+
 from dataclasses import dataclass
 
 from .thresholds import PAIN_MODIFY_SCORE, PAIN_STOP_SCORE

@@ -1,7 +1,7 @@
 """Epley/Brzycki known-value tests."""
 import pytest
 
-from kinetiq.engine.e1rm import e1rm, epley, brzycki, rir_from_rpe
+from kinetiq.engine.e1rm import brzycki, e1rm, epley, rir_from_rpe
 
 
 def test_epley_60x8():

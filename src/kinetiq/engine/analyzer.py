@@ -5,22 +5,28 @@ testable. The service layer (``services.analysis``) is responsible for hydrating
 inputs from SQLite and persisting outputs.
 """
 from __future__ import annotations
+
 from dataclasses import dataclass, field
 
 from .e1rm import e1rm, rir_from_rpe
-from .fatigue import FatigueInputs, score as fatigue_score
+from .fatigue import FatigueInputs, should_recommend_deload
+from .fatigue import score as fatigue_score
 from .increments import round_load
 from .pain import evaluate as evaluate_pain
 from .progression import (
-    ProgressionDecision, SetSummary,
-    decide_double_progression, decide_linear,
+    SetSummary,
+    decide_double_progression,
+    decide_linear,
+    decide_rpe_autoregulated,
+    decide_wave,
 )
 from .thresholds import (
     ENGINE_VERSION,
-    PROGRESSED_E1RM_PCT, PROGRESSED_TONNAGE_PCT,
-    REGRESSED_E1RM_PCT, REGRESSED_TONNAGE_PCT,
+    PROGRESSED_E1RM_PCT,
+    PROGRESSED_TONNAGE_PCT,
+    REGRESSED_E1RM_PCT,
+    REGRESSED_TONNAGE_PCT,
 )
-
 
 # ---- Inputs --------------------------------------------------------------
 
@@ -72,6 +78,7 @@ class ExerciseInput:
     previous_pain: list[int] | None = None
     bodyweight_kg: float | None = None
     linear_consecutive_misses: int = 0
+    wave_week: int = 1
 
 
 # ---- Outputs -------------------------------------------------------------
@@ -232,10 +239,7 @@ def analyse_exercise(ex: ExerciseInput) -> ExerciseVerdict:
     next_rep_target: int | None = None
     reason = ""
 
-    if pain_rec.action == "stop":
-        next_action = "swap"
-        reason = pain_rec.reason
-    elif pain_rec.action == "swap":
+    if pain_rec.action == "stop" or pain_rec.action == "swap":
         next_action = "swap"
         reason = pain_rec.reason
     elif pain_rec.action == "reduce" and top_eff is not None:
@@ -259,6 +263,21 @@ def analyse_exercise(ex: ExerciseInput) -> ExerciseVerdict:
                 summaries, rep_target=ex.rep_min or top_reps,
                 increment_kg=ex.increment_kg,
                 consecutive_misses=ex.linear_consecutive_misses,
+                movement_pattern=ex.movement_pattern,
+            )
+        elif ex.progression_rule == "rpe_autoregulated":
+            dec = decide_rpe_autoregulated(
+                summaries, target_rpe=10 - ex.target_rir,
+                increment_kg=ex.increment_kg,
+                rep_min=ex.rep_min or (top_reps - 1 if top_reps > 1 else 1),
+                rep_max=ex.rep_max or (top_reps + 2),
+                movement_pattern=ex.movement_pattern,
+            )
+        elif ex.progression_rule == "wave":
+            dec = decide_wave(
+                summaries,
+                week_in_block=ex.wave_week,
+                increment_kg=ex.increment_kg,
                 movement_pattern=ex.movement_pattern,
             )
         else:
@@ -352,6 +371,10 @@ def analyse_session(
     session_wellness: dict | None = None,
     sets_planned: int | None = None,
     prev_avg_rpe_3: float | None = None,
+    recent_fatigue_scores: list[float] | None = None,
+    plateau_counts: dict[int, int] | None = None,
+    block_week: int | None = None,
+    block_length: int | None = None,
 ) -> SessionAnalysisOutput:
     per_ex: list[ExerciseVerdict] = [analyse_exercise(e) for e in exercises]
 
@@ -412,6 +435,22 @@ def analyse_session(
 
     prs = sum(len(v.prs) for v in non_skipped)
     summary = f"{len(non_skipped)} exercises · perf {perf:+.2f} · fatigue {fs:.2f} · {prs} PR" + ("s" if prs != 1 else "")
+
+    # Auto-deload recommendation
+    check_scores = list(recent_fatigue_scores or []) + [fs]
+    deload_rec = should_recommend_deload(
+        check_scores,
+        plateau_counts or {},
+        block_week=block_week,
+        block_length=block_length,
+    )
+    if deload_rec and deload_rec.should_deload:
+        flags.append({
+            "kind": "deload",
+            "severity": deload_rec.severity,
+            "detail": deload_rec.reason,
+            "suggested_action": "call set_program_phase(action='start_deload')",
+        })
 
     return SessionAnalysisOutput(
         engine_version=ENGINE_VERSION,

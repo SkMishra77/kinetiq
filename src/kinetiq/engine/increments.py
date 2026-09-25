@@ -1,5 +1,6 @@
 """Equipment-aware rounding of suggested loads."""
 from __future__ import annotations
+
 from .thresholds import DEFAULT_INCREMENTS
 
 

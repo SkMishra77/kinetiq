@@ -1,5 +1,6 @@
 """Daily check-in repo."""
 from __future__ import annotations
+
 import json
 
 from ..connection import Database

@@ -18,13 +18,18 @@ Modifiers applied in order:
 Finally the load rounds to the exercise's increment.
 """
 from __future__ import annotations
+
 from dataclasses import dataclass
 
 from .increments import round_load
 from .thresholds import (
-    LAYOFF_LOAD_PCT_MEDIUM, LAYOFF_LOAD_PCT_LONG,
-    LAYOFF_MEDIUM_DAYS, LAYOFF_LONG_DAYS,
-    LOAD_READINESS_REDUCE_PCT, LOW_ENERGY_THRESHOLD, LOW_SLEEP_HOURS,
+    LAYOFF_LOAD_PCT_LONG,
+    LAYOFF_LOAD_PCT_MEDIUM,
+    LAYOFF_LONG_DAYS,
+    LAYOFF_MEDIUM_DAYS,
+    LOAD_READINESS_REDUCE_PCT,
+    LOW_ENERGY_THRESHOLD,
+    LOW_SLEEP_HOURS,
 )
 
 

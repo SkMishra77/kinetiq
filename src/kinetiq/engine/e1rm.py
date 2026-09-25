@@ -46,3 +46,62 @@ def rir_from_rpe(rpe: float | None) -> int | None:
         return None
     val = max(0.0, min(6.0, 10.0 - rpe))
     return int(round(val))
+
+
+from dataclasses import dataclass
+
+
+@dataclass
+class TestAttempt:
+    kind: str            # 'warmup' | 'ramp' | 'attempt'
+    load_kg: float
+    reps: int
+    rest_min: float
+    notes: str
+
+
+def plan_1rm_test(
+    current_e1rm: float,
+    increment_kg: float = 2.5,
+) -> list[TestAttempt]:
+    """Generate a 1RM testing protocol based on the user's current estimated max.
+
+    Warm-up ramp: bar (or 40%), 50%, 70%, 80%.
+    Working ramp: 90%.
+    Attempts: 95% (opener), 100% (target), 102.5% (stretch).
+    All loads rounded to the exercise's increment.
+    """
+    from .increments import round_load
+
+    bar_weight = 20.0
+    protocol: list[TestAttempt] = []
+
+    protocol.append(TestAttempt(
+        kind="warmup", load_kg=bar_weight, reps=10, rest_min=1.0,
+        notes="empty bar / light; get moving",
+    ))
+    for pct, reps, rest, kind in [
+        (0.50, 5, 1.5, "warmup"),
+        (0.70, 3, 2.0, "ramp"),
+        (0.80, 2, 3.0, "ramp"),
+        (0.90, 1, 3.5, "ramp"),
+    ]:
+        load = round_load(current_e1rm * pct, increment_kg, "nearest")
+        protocol.append(TestAttempt(
+            kind=kind, load_kg=load, reps=reps,
+            rest_min=rest,
+            notes=f"{int(pct*100)}% of estimated 1RM",
+        ))
+
+    for pct, label, rest in [
+        (0.95, "opener — conservative single", 4.0),
+        (1.00, "target 1RM attempt", 5.0),
+        (1.025, "stretch PR attempt (optional)", 5.0),
+    ]:
+        load = round_load(current_e1rm * pct, increment_kg, "nearest")
+        protocol.append(TestAttempt(
+            kind="attempt", load_kg=load, reps=1,
+            rest_min=rest, notes=label,
+        ))
+
+    return protocol

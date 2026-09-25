@@ -5,6 +5,7 @@ from typing import Literal, Final
 Goal = Literal[
     "muscle_gain", "fat_loss", "strength", "recomposition",
     "general_fitness", "endurance", "athletic",
+    "aesthetic_vtaper", "aesthetic_balanced", "classic_physique",
 ]
 Experience = Literal["beginner", "novice", "intermediate", "advanced"]
 Sex = Literal["male", "female", "other", "unspecified"]
@@ -48,6 +49,7 @@ AnalysisStatus = Literal[
 InsightKind = Literal[
     "progress", "pr", "plateau", "fatigue", "recovery", "pain",
     "form", "adherence", "bodyweight", "program", "layoff", "volume", "frequency",
+    "physique",
 ]
 Severity = Literal["info", "watch", "action"]
 

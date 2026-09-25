@@ -74,9 +74,10 @@ def create_server(settings: Settings) -> tuple[FastMCP, Services]:
         history as t_history,
         knowledge as t_knowledge,
         export as t_export,
+        cardio as t_cardio,
     )
     for mod in (t_briefing, t_profile, t_exercises, t_program, t_planning,
-                t_logging, t_history, t_knowledge, t_export):
+                t_logging, t_history, t_knowledge, t_export, t_cardio):
         mod.register(mcp, services)
 
     # /health custom route

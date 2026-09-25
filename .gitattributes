@@ -1,0 +1,27 @@
+# Auto detect text files and normalize to LF
+* text=auto eol=lf
+
+# Explicitly declare files that should always have LF
+*.py text eol=lf
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.js text eol=lf
+*.sh text eol=lf
+*.sql text eol=lf
+*.toml text eol=lf
+*.txt text eol=lf
+*.ini text eol=lf
+Dockerfile text eol=lf
+Caddyfile text eol=lf
+
+# Denote binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.db binary
+*.sqlite binary
+*.gz binary

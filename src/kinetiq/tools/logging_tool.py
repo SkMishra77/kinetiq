@@ -1,24 +1,27 @@
 """log_workout, amend_workout, analyze_workout tools."""
 from __future__ import annotations
+
 from typing import Annotated
 
 from fastmcp import FastMCP
 from fastmcp.exceptions import ToolError
-from pydantic import Field
 from mcp.types import ToolAnnotations
+from pydantic import Field
 
-from ..services import Services
-from ..domain.models import ExerciseEntry, WellnessInput
-from ..domain.dates import parse_date
-from ..db.repos import exercises as exr
-from ..db.repos import workouts as wr
 from ..db.repos import analysis as anal
-from ..db.repos import programs as prg
+from ..db.repos import exercises as exr
 from ..db.repos import profile as pr
-from ..parsing.sets_shorthand import parse_shorthand
+from ..db.repos import programs as prg
+from ..db.repos import workouts as wr
+from ..domain.dates import parse_date
+from ..domain.models import ExerciseEntry, WellnessInput
 from ..engine.analyzer import (
-    analyse_session, ExerciseInput, SetInput,
+    ExerciseInput,
+    SetInput,
+    analyse_session,
 )
+from ..parsing.sets_shorthand import parse_shorthand
+from ..services import Services
 
 
 def register(mcp: FastMCP, svc: Services) -> None:

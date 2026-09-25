@@ -1,23 +1,23 @@
 """plan_next_session tool."""
 from __future__ import annotations
+
 import json
+from datetime import date as _date
 from typing import Annotated
 
 from fastmcp import FastMCP
 from fastmcp.exceptions import ToolError
-from pydantic import Field
 from mcp.types import ToolAnnotations
+from pydantic import Field
 
-from ..services import Services
-from ..db.repos import programs as prg
-from ..db.repos import workouts as wr
+from ..db.repos import analysis as anal
 from ..db.repos import exercises as exr
 from ..db.repos import issues as iss
-from ..db.repos import analysis as anal
+from ..db.repos import programs as prg
 from ..domain.dates import parse_date, today
-from ..engine.planner import plan_session, TemplateExerciseCtx
 from ..engine.increments import increment_for
-from datetime import date as _date
+from ..engine.planner import TemplateExerciseCtx, plan_session
+from ..services import Services
 
 
 def register(mcp: FastMCP, svc: Services) -> None:
@@ -217,6 +217,7 @@ def _plan_dict(plan) -> dict:
             "last_performance": pe.last_performance,
             "substitutes": pe.substitutes,
             "warmup_ramp": pe.warmup_ramp,
+            "superset_group": pe.superset_group,
         } for pe in plan.exercises],
     }
 

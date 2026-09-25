@@ -1,15 +1,13 @@
 """Build the ``get_briefing`` payload from repo functions."""
 from __future__ import annotations
-import json
-from datetime import date
 
 from ..db.connection import Database
+from ..db.repos import analysis as anal
+from ..db.repos import checkins as ck
+from ..db.repos import issues as iss
 from ..db.repos import profile as pr
 from ..db.repos import programs as prg
 from ..db.repos import workouts as wr
-from ..db.repos import checkins as ck
-from ..db.repos import issues as iss
-from ..db.repos import analysis as anal
 from ..domain.dates import today
 
 
@@ -36,6 +34,45 @@ def build(db: Database, tz: str, detail: str = "compact",
     bw = ck.bodyweight_trend(db)
     ready = ck.latest_readiness(db)
     open_issue_rows = iss.open_issues(db)
+
+    # Weekly volume check
+    from ..engine.volume import check_volume_bands, weekly_hard_sets
+    vol_entries = wr.weekly_volume_entries(db)
+    muscle_sets = weekly_hard_sets(vol_entries)
+    goal = prof.get("primary_goal") or "muscle_gain"
+    volume_flags = check_volume_bands(muscle_sets, goal)
+
+    # Frequency check
+    from ..engine.frequency import check_frequency
+    days_per_week = prof.get("days_per_week") or 3
+    frequency_flags = check_frequency(dsm, goal, days_per_week)
+
+    # Muscle readiness (enriched days_since_muscle)
+    from ..engine.recovery import muscle_readiness
+    sleep_avg = ready.get("sleep_hours_avg")
+    muscle_ready = muscle_readiness(dsm, muscle_sets, sleep_avg)
+
+    # Physique proportionality (aesthetic goals only)
+    from ..engine.proportions import assess_proportions
+    from ..engine.thresholds import AESTHETIC_VOLUME_PRIORITIES
+    physique_balance = None
+    if goal in AESTHETIC_VOLUME_PRIORITIES:
+        measurements = pr.latest_measurements(db)
+        if measurements:
+            report = assess_proportions(measurements, goal)
+            physique_balance = {
+                "goal": report.goal,
+                "score": report.score,
+                "ratios": report.ratios,
+                "targets": report.targets,
+                "lagging": [
+                    {"muscles": lp.muscles, "ratio": lp.ratio_name,
+                     "current": lp.current, "target": lp.target,
+                     "gap_pct": lp.gap_pct, "suggestion": lp.suggestion}
+                    for lp in report.lagging
+                ],
+                "symmetry_issues": report.symmetry_issues,
+            }
 
     # rotation position
     rotation = None
@@ -101,6 +138,19 @@ def build(db: Database, tz: str, detail: str = "compact",
         },
         "recent_sessions": recent,
         "days_since_muscle": dsm,
+        "muscle_readiness": muscle_ready,
+        "weekly_volume": muscle_sets,
+        "volume_flags": [
+            {"muscle": f.muscle, "sets": f.sets, "band": (f.band_low, f.band_high),
+             "status": f.status, "severity": f.severity}
+            for f in volume_flags
+        ],
+        "frequency_flags": [
+            {"muscle": f.muscle, "days_since": f.days_since,
+             "threshold_days": f.threshold_days, "severity": f.severity}
+            for f in frequency_flags
+        ],
+        "physique_balance": physique_balance,
         "open_insights": open_ins[:10],
         "pending_adjustments": pending[:10],
         "recent_prs": prs[:8],

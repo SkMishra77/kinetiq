@@ -1,10 +1,20 @@
 """Fatigue and readiness scoring.
 
 Blends session RPE drift, per-session performance drop, and check-in readiness
-(sleep, energy, soreness) into a single 0–1 score.
+(sleep, energy, soreness) into a single 0–1 score. Also provides auto-deload
+recommendation based on accumulated fatigue and plateau signals.
 """
 from __future__ import annotations
+
 from dataclasses import dataclass
+
+from .thresholds import (
+    DELOAD_FATIGUE_MIN_SESSIONS,
+    DELOAD_FATIGUE_TRIGGER,
+    DELOAD_FATIGUE_WINDOW,
+    DELOAD_PLATEAU_TRIGGER,
+    PLATEAU_ACTION_COUNT,
+)
 
 
 @dataclass
@@ -47,3 +57,52 @@ def score(inp: FatigueInputs) -> float:
         parts.append((0.10, _clamp(inp.soreness / 5.0)))
     total_w = sum(w for w, _ in parts) or 1.0
     return round(sum(w * c for w, c in parts) / total_w, 3)
+
+
+@dataclass
+class DeloadRecommendation:
+    should_deload: bool
+    reason: str
+    severity: str = "action"
+
+
+def should_recommend_deload(
+    recent_fatigue_scores: list[float],
+    plateau_counts: dict[int, int],
+    block_week: int | None = None,
+    block_length: int | None = None,
+) -> DeloadRecommendation | None:
+    """Determine whether to recommend a deload based on accumulated signals.
+
+    Triggers (any one is sufficient):
+    1. Fatigue >= 0.7 on >= 2 of last 3 sessions.
+    2. >= 3 exercises at plateau_count >= 4.
+    3. Block week >= block_length (scheduled deload).
+    """
+    # Trigger 1: sustained high fatigue
+    window = recent_fatigue_scores[-DELOAD_FATIGUE_WINDOW:]
+    high_count = sum(1 for f in window if f >= DELOAD_FATIGUE_TRIGGER)
+    if high_count >= DELOAD_FATIGUE_MIN_SESSIONS:
+        return DeloadRecommendation(
+            should_deload=True,
+            reason=f"fatigue score >= {DELOAD_FATIGUE_TRIGGER} in "
+                   f"{high_count} of last {len(window)} sessions",
+        )
+
+    # Trigger 2: widespread plateau
+    plateaued = sum(1 for c in plateau_counts.values() if c >= PLATEAU_ACTION_COUNT)
+    if plateaued >= DELOAD_PLATEAU_TRIGGER:
+        return DeloadRecommendation(
+            should_deload=True,
+            reason=f"{plateaued} exercises at plateau (>= {PLATEAU_ACTION_COUNT} stalled exposures)",
+        )
+
+    # Trigger 3: block length reached
+    if block_week is not None and block_length is not None and block_week >= block_length:
+        return DeloadRecommendation(
+            should_deload=True,
+            reason=f"block week {block_week} >= planned length {block_length}; scheduled deload",
+            severity="info",
+        )
+
+    return None

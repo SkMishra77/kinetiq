@@ -1,5 +1,6 @@
 """Knowledge notes + research cache SQL."""
 from __future__ import annotations
+
 import json
 
 from ..connection import Database

@@ -21,7 +21,7 @@
   cues: "Squeeze scapulae, feet planted, mild arch; bar-path from mid-chest to shoulders."
   contraindication_tags: [shoulder_impingement, wrist_flexion_pain]
   evidence_summary: "Compound press with high loading potential; strong hypertrophy for chest with heavy sets and moderate reps."
-  selection_scores: {muscle_gain: 5, strength: 5, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 5, strength: 5, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 4, aesthetic_balanced: 5, classic_physique: 5}
 
 - slug: incline-barbell-bench-press
   name: Incline Barbell Bench Press
@@ -36,7 +36,7 @@
   aliases: [incline bench, incline press, incline barbell]
   cues: "Bench angle ~30°; keep elbows moderate to protect the shoulder."
   contraindication_tags: [shoulder_impingement]
-  selection_scores: {muscle_gain: 5, strength: 4, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 5, strength: 4, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 4, aesthetic_balanced: 5, classic_physique: 5}
 
 - slug: dumbbell-bench-press
   name: Dumbbell Bench Press
@@ -50,7 +50,7 @@
   default_rest_s: 150
   aliases: [db bench, db press, dumbbell press, dumbell bench press]
   cues: "Stack the shoulder; slow eccentric; deep stretch at the bottom."
-  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 4, aesthetic_balanced: 5, classic_physique: 5}
 
 - slug: incline-dumbbell-press
   name: Incline Dumbbell Press
@@ -63,7 +63,7 @@
   default_increment_kg: 2.0
   default_rest_s: 150
   aliases: [incline db press, incline db bench, db incline]
-  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 4, aesthetic_balanced: 5, classic_physique: 5}
 
 - slug: machine-chest-press
   name: Machine Chest Press
@@ -76,7 +76,7 @@
   default_increment_kg: 5.0
   default_rest_s: 120
   aliases: [chest press machine, seated chest press, hammer press]
-  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 4, general_fitness: 5}
+  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 4, general_fitness: 5, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 4}
 
 - slug: cable-fly
   name: Cable Fly
@@ -89,7 +89,7 @@
   default_increment_kg: 2.5
   default_rest_s: 75
   aliases: [cable flies, cable crossover, chest fly cable]
-  selection_scores: {muscle_gain: 4, strength: 2, fat_loss: 3, general_fitness: 3}
+  selection_scores: {muscle_gain: 4, strength: 2, fat_loss: 3, general_fitness: 3, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 5}
 
 - slug: push-up
   name: Push-Up
@@ -103,7 +103,7 @@
   default_increment_kg: 2.5
   default_rest_s: 60
   aliases: [pushup, pushups, push up]
-  selection_scores: {muscle_gain: 3, strength: 2, fat_loss: 4, general_fitness: 5}
+  selection_scores: {muscle_gain: 3, strength: 2, fat_loss: 4, general_fitness: 5, aesthetic_vtaper: 2, aesthetic_balanced: 3, classic_physique: 3}
 
 - slug: overhead-press
   name: Overhead Press
@@ -117,7 +117,7 @@
   default_rest_s: 180
   aliases: [ohp, standing press, military press]
   contraindication_tags: [shoulder_impingement, low_back_extension_pain]
-  selection_scores: {muscle_gain: 4, strength: 5, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 4, strength: 5, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 4}
 
 - slug: dumbbell-shoulder-press
   name: Dumbbell Shoulder Press
@@ -130,7 +130,7 @@
   default_increment_kg: 2.0
   default_rest_s: 120
   aliases: [db shoulder press, seated db press, db overhead press]
-  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 4}
 
 - slug: dumbbell-lateral-raise
   name: Dumbbell Lateral Raise
@@ -143,7 +143,7 @@
   default_increment_kg: 1.0
   default_rest_s: 60
   aliases: [lateral raise, side raise, db lateral raise, side laterals]
-  selection_scores: {muscle_gain: 5, strength: 2, fat_loss: 3, general_fitness: 3}
+  selection_scores: {muscle_gain: 5, strength: 2, fat_loss: 3, general_fitness: 3, aesthetic_vtaper: 5, aesthetic_balanced: 5, classic_physique: 5}
 
 - slug: cable-lateral-raise
   name: Cable Lateral Raise
@@ -155,7 +155,7 @@
   default_increment_kg: 2.5
   default_rest_s: 60
   aliases: [cable side raise]
-  selection_scores: {muscle_gain: 5, strength: 2, fat_loss: 3, general_fitness: 3}
+  selection_scores: {muscle_gain: 5, strength: 2, fat_loss: 3, general_fitness: 3, aesthetic_vtaper: 5, aesthetic_balanced: 5, classic_physique: 5}
 
 - slug: rear-delt-flye
   name: Rear Delt Flye
@@ -168,7 +168,7 @@
   default_increment_kg: 1.0
   default_rest_s: 60
   aliases: [rear delt fly, bent-over fly, reverse fly]
-  selection_scores: {muscle_gain: 4, strength: 1, fat_loss: 2, general_fitness: 3}
+  selection_scores: {muscle_gain: 4, strength: 1, fat_loss: 2, general_fitness: 3, aesthetic_vtaper: 4, aesthetic_balanced: 4, classic_physique: 4}
 
 - slug: barbell-row
   name: Barbell Row
@@ -182,7 +182,7 @@
   default_rest_s: 150
   aliases: [bb row, bent-over row, pendlay row]
   contraindication_tags: [low_back_pain]
-  selection_scores: {muscle_gain: 5, strength: 4, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 5, strength: 4, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 5, aesthetic_balanced: 5, classic_physique: 5}
 
 - slug: dumbbell-row
   name: Dumbbell Row
@@ -196,7 +196,7 @@
   default_increment_kg: 2.0
   default_rest_s: 90
   aliases: [db row, one-arm db row, single-arm row]
-  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 5, aesthetic_balanced: 4, classic_physique: 4}
 
 - slug: seated-cable-row
   name: Seated Cable Row
@@ -209,7 +209,7 @@
   default_increment_kg: 2.5
   default_rest_s: 90
   aliases: [cable row, seated row, low row]
-  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 5}
+  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 5, aesthetic_vtaper: 5, aesthetic_balanced: 4, classic_physique: 4}
 
 - slug: chest-supported-row
   name: Chest-Supported Row
@@ -222,7 +222,7 @@
   default_increment_kg: 5.0
   default_rest_s: 90
   aliases: [chest supported row, seal row, prone row]
-  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 5, aesthetic_balanced: 5, classic_physique: 5}
 
 - slug: lat-pulldown
   name: Lat Pulldown
@@ -235,7 +235,7 @@
   default_increment_kg: 2.5
   default_rest_s: 90
   aliases: [lat pd, pulldown, lat pull down, cable pulldown]
-  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 5, aesthetic_balanced: 5, classic_physique: 5}
 
 - slug: pull-up
   name: Pull-Up
@@ -249,7 +249,7 @@
   default_increment_kg: 2.5
   default_rest_s: 120
   aliases: [pullup, pullups, pull up]
-  selection_scores: {muscle_gain: 4, strength: 4, fat_loss: 3, general_fitness: 5}
+  selection_scores: {muscle_gain: 4, strength: 4, fat_loss: 3, general_fitness: 5, aesthetic_vtaper: 5, aesthetic_balanced: 4, classic_physique: 4}
 
 - slug: chin-up
   name: Chin-Up
@@ -263,7 +263,7 @@
   default_increment_kg: 2.5
   default_rest_s: 120
   aliases: [chinup, chin ups, chin up]
-  selection_scores: {muscle_gain: 5, strength: 4, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 5, strength: 4, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 5, aesthetic_balanced: 5, classic_physique: 5}
 
 - slug: barbell-back-squat
   name: Barbell Back Squat
@@ -277,7 +277,7 @@
   default_rest_s: 240
   aliases: [back squat, high-bar squat, low-bar squat]
   contraindication_tags: [knee_deep_flexion_pain, low_back_flexion_load]
-  selection_scores: {muscle_gain: 5, strength: 5, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 5, strength: 5, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 4}
 
 - slug: front-squat
   name: Front Squat
@@ -291,7 +291,7 @@
   default_rest_s: 210
   aliases: [front squat, fs]
   contraindication_tags: [wrist_flexion_pain, knee_deep_flexion_pain]
-  selection_scores: {muscle_gain: 4, strength: 4, fat_loss: 3, general_fitness: 3}
+  selection_scores: {muscle_gain: 4, strength: 4, fat_loss: 3, general_fitness: 3, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 4}
 
 - slug: leg-press
   name: Leg Press
@@ -304,7 +304,7 @@
   default_increment_kg: 10.0
   default_rest_s: 150
   aliases: [45 leg press, incline leg press]
-  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 4, general_fitness: 4}
+  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 4, general_fitness: 4, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 4}
 
 - slug: goblet-squat
   name: Goblet Squat
@@ -317,7 +317,7 @@
   default_increment_kg: 2.0
   default_rest_s: 90
   aliases: [db goblet squat, kettlebell goblet squat]
-  selection_scores: {muscle_gain: 3, strength: 2, fat_loss: 3, general_fitness: 5}
+  selection_scores: {muscle_gain: 3, strength: 2, fat_loss: 3, general_fitness: 5, aesthetic_vtaper: 2, aesthetic_balanced: 3, classic_physique: 3}
 
 - slug: romanian-deadlift
   name: Romanian Deadlift
@@ -331,7 +331,7 @@
   default_rest_s: 180
   aliases: [rdl, barbell rdl, romanian deadlifts]
   contraindication_tags: [low_back_pain]
-  selection_scores: {muscle_gain: 5, strength: 4, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 5, strength: 4, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 4}
 
 - slug: dumbbell-romanian-deadlift
   name: Dumbbell Romanian Deadlift
@@ -344,7 +344,7 @@
   default_increment_kg: 2.0
   default_rest_s: 120
   aliases: [db rdl, dumbbell rdl]
-  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 4}
 
 - slug: deadlift
   name: Conventional Deadlift
@@ -358,7 +358,7 @@
   default_rest_s: 300
   aliases: [conventional deadlift, dl, deadlifts]
   contraindication_tags: [low_back_pain]
-  selection_scores: {muscle_gain: 4, strength: 5, fat_loss: 3, general_fitness: 3}
+  selection_scores: {muscle_gain: 4, strength: 5, fat_loss: 3, general_fitness: 3, aesthetic_vtaper: 2, aesthetic_balanced: 3, classic_physique: 3}
 
 - slug: hip-thrust
   name: Barbell Hip Thrust
@@ -371,7 +371,7 @@
   default_increment_kg: 5.0
   default_rest_s: 150
   aliases: [hip thrust, bb hip thrust]
-  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 3, general_fitness: 3}
+  selection_scores: {muscle_gain: 5, strength: 3, fat_loss: 3, general_fitness: 3, aesthetic_vtaper: 2, aesthetic_balanced: 4, classic_physique: 3}
 
 - slug: walking-lunge
   name: Walking Lunge
@@ -385,7 +385,7 @@
   default_increment_kg: 2.0
   default_rest_s: 90
   aliases: [walking lunges, db walking lunge]
-  selection_scores: {muscle_gain: 3, strength: 3, fat_loss: 4, general_fitness: 4}
+  selection_scores: {muscle_gain: 3, strength: 3, fat_loss: 4, general_fitness: 4, aesthetic_vtaper: 2, aesthetic_balanced: 3, classic_physique: 3}
 
 - slug: bulgarian-split-squat
   name: Bulgarian Split Squat
@@ -399,7 +399,7 @@
   default_increment_kg: 2.0
   default_rest_s: 90
   aliases: [bulgarian split squat, split squat, rfess]
-  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 4}
 
 - slug: leg-curl
   name: Seated Leg Curl
@@ -411,7 +411,7 @@
   default_increment_kg: 2.5
   default_rest_s: 75
   aliases: [seated leg curl, lying leg curl, hamstring curl]
-  selection_scores: {muscle_gain: 5, strength: 2, fat_loss: 3, general_fitness: 3}
+  selection_scores: {muscle_gain: 5, strength: 2, fat_loss: 3, general_fitness: 3, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 4}
 
 - slug: leg-extension
   name: Leg Extension
@@ -423,7 +423,7 @@
   default_increment_kg: 2.5
   default_rest_s: 75
   aliases: [quad extension]
-  selection_scores: {muscle_gain: 4, strength: 1, fat_loss: 2, general_fitness: 3}
+  selection_scores: {muscle_gain: 4, strength: 1, fat_loss: 2, general_fitness: 3, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 4}
 
 - slug: standing-calf-raise
   name: Standing Calf Raise
@@ -435,7 +435,7 @@
   default_increment_kg: 2.5
   default_rest_s: 60
   aliases: [calf raise, calves, standing calf]
-  selection_scores: {muscle_gain: 4, strength: 2, fat_loss: 2, general_fitness: 3}
+  selection_scores: {muscle_gain: 4, strength: 2, fat_loss: 2, general_fitness: 3, aesthetic_vtaper: 2, aesthetic_balanced: 4, classic_physique: 5}
 
 - slug: barbell-curl
   name: Barbell Curl
@@ -448,7 +448,7 @@
   default_increment_kg: 1.25
   default_rest_s: 75
   aliases: [bb curl, ez bar curl]
-  selection_scores: {muscle_gain: 4, strength: 2, fat_loss: 2, general_fitness: 3}
+  selection_scores: {muscle_gain: 4, strength: 2, fat_loss: 2, general_fitness: 3, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 5}
 
 - slug: dumbbell-curl
   name: Dumbbell Curl
@@ -461,7 +461,7 @@
   default_increment_kg: 1.0
   default_rest_s: 60
   aliases: [db curl, dumbell curl, alternating db curl]
-  selection_scores: {muscle_gain: 4, strength: 1, fat_loss: 2, general_fitness: 3}
+  selection_scores: {muscle_gain: 4, strength: 1, fat_loss: 2, general_fitness: 3, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 5}
 
 - slug: cable-triceps-pushdown
   name: Cable Triceps Pushdown
@@ -473,7 +473,7 @@
   default_increment_kg: 2.5
   default_rest_s: 60
   aliases: [triceps pushdown, tricep pushdown, cable pushdown]
-  selection_scores: {muscle_gain: 4, strength: 2, fat_loss: 3, general_fitness: 3}
+  selection_scores: {muscle_gain: 4, strength: 2, fat_loss: 3, general_fitness: 3, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 5}
 
 - slug: overhead-triceps-extension
   name: Overhead Triceps Extension
@@ -485,7 +485,7 @@
   default_increment_kg: 2.5
   default_rest_s: 60
   aliases: [overhead tricep extension, cable overhead extension, french press]
-  selection_scores: {muscle_gain: 5, strength: 2, fat_loss: 3, general_fitness: 3}
+  selection_scores: {muscle_gain: 5, strength: 2, fat_loss: 3, general_fitness: 3, aesthetic_vtaper: 3, aesthetic_balanced: 4, classic_physique: 5}
 
 - slug: plank
   name: Plank
@@ -497,7 +497,7 @@
   default_increment_kg: 0.0
   default_rest_s: 45
   aliases: [front plank, forearm plank]
-  selection_scores: {muscle_gain: 2, strength: 3, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 2, strength: 3, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 3, aesthetic_balanced: 3, classic_physique: 3}
 
 - slug: hanging-leg-raise
   name: Hanging Leg Raise
@@ -511,7 +511,7 @@
   default_increment_kg: 2.5
   default_rest_s: 75
   aliases: [hanging leg raise, hlr, hanging knee raise]
-  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 4}
+  selection_scores: {muscle_gain: 4, strength: 3, fat_loss: 3, general_fitness: 4, aesthetic_vtaper: 3, aesthetic_balanced: 3, classic_physique: 4}
 
 - slug: incline-walk
   name: Incline Treadmill Walk
@@ -524,7 +524,7 @@
   default_increment_kg: 0.0
   default_rest_s: 0
   aliases: [treadmill incline walk, incline walk, 12/3/30]
-  selection_scores: {muscle_gain: 1, strength: 1, fat_loss: 5, general_fitness: 5}
+  selection_scores: {muscle_gain: 1, strength: 1, fat_loss: 5, general_fitness: 5, aesthetic_vtaper: 4, aesthetic_balanced: 3, classic_physique: 3}
 
 - slug: stationary-bike
   name: Stationary Bike (Steady)
@@ -536,7 +536,7 @@
   is_compound: true
   default_increment_kg: 0.0
   aliases: [bike, exercise bike, stationary bicycle]
-  selection_scores: {muscle_gain: 1, strength: 1, fat_loss: 4, general_fitness: 5, endurance: 5}
+  selection_scores: {muscle_gain: 1, strength: 1, fat_loss: 4, general_fitness: 5, endurance: 5, aesthetic_vtaper: 3, aesthetic_balanced: 3, classic_physique: 3}
 
 - slug: rowing-machine
   name: Rowing Machine
@@ -548,4 +548,4 @@
   is_compound: true
   default_increment_kg: 0.0
   aliases: [rower, erg, concept 2]
-  selection_scores: {muscle_gain: 1, strength: 1, fat_loss: 5, general_fitness: 5, endurance: 5}
+  selection_scores: {muscle_gain: 1, strength: 1, fat_loss: 5, general_fitness: 5, endurance: 5, aesthetic_vtaper: 4, aesthetic_balanced: 3, classic_physique: 3}

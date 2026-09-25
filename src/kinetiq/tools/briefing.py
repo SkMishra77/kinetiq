@@ -1,13 +1,14 @@
 """get_briefing tool."""
 from __future__ import annotations
+
 from typing import Annotated, Literal
 
 from fastmcp import FastMCP
-from pydantic import Field
 from mcp.types import ToolAnnotations
+from pydantic import Field
 
-from ..services import Services
 from ..briefing.builder import build
+from ..services import Services
 
 
 def register(mcp: FastMCP, svc: Services) -> None:

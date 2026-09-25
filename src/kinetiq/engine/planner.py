@@ -1,9 +1,11 @@
 """Assemble a full session plan from template + history + readiness."""
 from __future__ import annotations
+
 from dataclasses import dataclass, field
 
-from .loads import LoadInputs, LoadPlan, compute as compute_load
 from . import warmup as wu
+from .loads import LoadInputs, LoadPlan
+from .loads import compute as compute_load
 
 
 @dataclass
@@ -60,6 +62,7 @@ class PlannedExercise:
     last_performance: str | None
     substitutes: list[dict]
     warmup_ramp: list[dict]
+    superset_group: str | None = None
 
 
 @dataclass
@@ -137,6 +140,7 @@ def plan_session(
             ),
             substitutes=e.substitutes,
             warmup_ramp=[],  # filled below
+            superset_group=e.superset_group,
         ))
         if lp.mode == "deload":
             rationale.append(f"{e.name}: deload load applied")
@@ -178,9 +182,29 @@ def plan_session(
 
 
 def _estimate_minutes(planned: list[PlannedExercise]) -> int:
-    """Simple heuristic: sum of (sets × (rest + 45s)) / 60."""
+    """Heuristic time estimate with superset awareness.
+
+    Exercises in the same superset_group share rest time between pairs rather
+    than resting independently. For paired exercises the rest is taken once per
+    pair-round, not per individual set.
+    """
     secs = 8 * 60  # warm-up + cooldown budget
+    seen_groups: dict[str, list[PlannedExercise]] = {}
+    solo: list[PlannedExercise] = []
     for pe in planned:
+        if pe.superset_group:
+            seen_groups.setdefault(pe.superset_group, []).append(pe)
+        else:
+            solo.append(pe)
+
+    for pe in solo:
         set_time = pe.rest_s + 45
         secs += pe.sets * set_time
+
+    for group_exercises in seen_groups.values():
+        max_sets = max(pe.sets for pe in group_exercises)
+        max_rest = max(pe.rest_s for pe in group_exercises)
+        work_per_round = sum(45 for _ in group_exercises)
+        secs += max_sets * (work_per_round + max_rest)
+
     return int(round(secs / 60))

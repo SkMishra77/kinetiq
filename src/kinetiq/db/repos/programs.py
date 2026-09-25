@@ -1,5 +1,6 @@
 """Program / block / session_template / template_exercise SQL."""
 from __future__ import annotations
+
 import json
 from typing import Any
 

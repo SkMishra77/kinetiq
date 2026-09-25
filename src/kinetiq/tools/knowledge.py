@@ -1,17 +1,18 @@
 """search_knowledge, search_research, save_finding tools."""
 from __future__ import annotations
+
 import os
 from typing import Annotated
 
 from fastmcp import FastMCP
 from fastmcp.exceptions import ToolError
-from pydantic import Field
 from mcp.types import ToolAnnotations
+from pydantic import Field
 
-from ..services import Services
-from ..db.repos import knowledge as kr
 from ..db.repos import exercises as exr
+from ..db.repos import knowledge as kr
 from ..knowledge.research import client as research
+from ..services import Services
 
 
 def register(mcp: FastMCP, svc: Services) -> None:

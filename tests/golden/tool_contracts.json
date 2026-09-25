@@ -21,6 +21,13 @@
     "description_head": "Re-run the deterministic analysis for one workout \u2014 useful after editing sets or when the engine version bumps."
   },
   {
+    "name": "apply_program_template",
+    "read_only": false,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Instantiate a pre-built program template as the user's active program. Resolves exercises against the library and respec"
+  },
+  {
     "name": "compare_exercises",
     "read_only": true,
     "destructive": false,
@@ -49,6 +56,13 @@
     "description_head": "Bulk export training data as JSON. Scopes: 'workouts', 'checkins', 'profile', 'all'. Use for backups or moving to anothe"
   },
   {
+    "name": "get_body_trends",
+    "read_only": true,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Return body weight, body fat %, and measurement trends over time. Use when the user asks 'how has my weight changed', 's"
+  },
+  {
     "name": "get_briefing",
     "read_only": true,
     "destructive": false,
@@ -56,11 +70,25 @@
     "description_head": "CALL THIS FIRST in every conversation before giving any training advice. Returns the user's profile summary, active prog"
   },
   {
+    "name": "get_cardio_history",
+    "read_only": true,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Return recent cardio/conditioning sessions. Use when the user asks 'how much cardio have I done' or 'show my running log"
+  },
+  {
     "name": "get_exercise_history",
     "read_only": true,
     "destructive": false,
     "open_world": false,
     "description_head": "Return every session where an exercise was performed: date, sets, top load, e1RM, tonnage, average RPE, feel/pain, and t"
+  },
+  {
+    "name": "get_physique_report",
+    "read_only": true,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Evaluate body proportions against the user's aesthetic goal (aesthetic_vtaper, aesthetic_balanced, classic_physique). Re"
   },
   {
     "name": "get_program",
@@ -75,6 +103,34 @@
     "destructive": false,
     "open_world": false,
     "description_head": "List recent workouts (optionally filtered by date range or muscle). Returns per-session summary, performance & fatigue s"
+  },
+  {
+    "name": "get_trends",
+    "read_only": true,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Return time-series data for e1RM, volume, bodyweight, or performance trends, shaped for charts. Specify `metric` (e1rm/b"
+  },
+  {
+    "name": "import_training_data",
+    "read_only": false,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Import training history from a JSON payload. Supports Kinetiq export format (round-trip), or a generic format: `{workout"
+  },
+  {
+    "name": "list_program_templates",
+    "read_only": true,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "List pre-built program templates matching the user's goal, experience level, days/week and available equipment. Use duri"
+  },
+  {
+    "name": "log_cardio",
+    "read_only": false,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Log a cardio or conditioning session (running, cycling, rowing, swimming, walking, HIIT, etc.). Use when the user report"
   },
   {
     "name": "log_checkin",
@@ -96,6 +152,13 @@
     "destructive": false,
     "open_world": false,
     "description_head": "Store a completed workout AND analyse it in one call. Accepts a list of exercises with either structured `sets` or a raw"
+  },
+  {
+    "name": "plan_1rm_test",
+    "read_only": true,
+    "destructive": false,
+    "open_world": false,
+    "description_head": "Generate a 1RM testing protocol for an exercise based on the user's current estimated max. Returns warm-up ramp sets, wo"
   },
   {
     "name": "plan_next_session",

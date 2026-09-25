@@ -71,6 +71,27 @@ Given top working set `L` and target rep range `[rmin, rmax]`:
 - Hit target reps every set → `L + increment`.
 - Two consecutive misses → `L − 10 %`.
 
+## Load rules — RPE-autoregulated
+
+RPE-based progression used when `progression_rule='rpe_autoregulated'`:
+
+- All working sets at or below target RPE → increase load by increment
+  (same % logic as double progression for upper/lower).
+- Any set at RPE `>= target + 1` → hold load.
+- Any set at RPE `>= 9.5` with reps below `rep_min` → reduce 7.5 %.
+- If no RPE data is present on any set → fall back to double progression.
+
+## Load rules — wave (undulating periodisation)
+
+Used when `progression_rule='wave'`. Default 3-phase cycle per block:
+
+- **Phase 1** (week 1): 3×10.
+- **Phase 2** (week 2): 3×8 at higher load (+increment or +%).
+- **Phase 3** (week 3): 3×6 at higher load.
+- After phase 3 completes, cycle resets to phase 1 at `L + increment`.
+- If target reps are not hit, the phase repeats at the same load.
+- `week_in_block` determines the current phase (1-indexed, wraps).
+
 ## Suggested load pipeline (`plan_next_session`)
 
 1. Pending `next_session_adjustments` for this exercise (`load`, `load_pct`,
@@ -103,3 +124,50 @@ general_fitness / athletic / endurance: 8–15/16.`
 
 The engine surfaces an `info` insight when the rolling 7-day tally is outside
 the band for the user's goal.
+
+`check_volume_bands()` in `engine/volume.py` compares the 7-day tally from
+`weekly_hard_sets()` against the goal-specific band. Muscles below the low end
+get an `under/info` flag; muscles above the high end get an `over/watch` flag.
+These appear in the briefing payload under `volume_flags` and in `open_insights`
+as `kind='volume'` entries.
+
+## Auto-deload recommendation
+
+The engine recommends a deload (emitting a `kind='deload'` flag/insight) when
+any of these triggers fire:
+
+1. **Sustained high fatigue**: fatigue score `>= 0.7` in at least 2 of the
+   last 3 sessions.
+2. **Widespread plateau**: `>= 3` exercises with `plateau_count >= 4`.
+3. **Block length reached**: current block week `>=` planned `block_length_weeks`.
+
+The deload is *not* auto-applied — it generates an insight that Claude surfaces;
+the user or Claude must call `set_program_phase(action='start_deload')` to
+actually enter the deload block.
+
+## Aesthetic physique goals
+
+Goals `aesthetic_vtaper`, `aesthetic_balanced`, and `classic_physique` activate
+per-muscle volume bands from `AESTHETIC_VOLUME_PRIORITIES` in `thresholds.py`.
+
+Key differences from flat bands:
+
+- **V-taper**: lats 16–22, side delts 16–22, obliques 4–8 (minimise),
+  traps 6–10 (low priority). Maximises shoulder-to-waist ratio.
+- **Classic physique**: chest 16–22, lats 14–20, biceps/triceps 12–18,
+  calves 10–16. Arms and calves are weighted equally ("calf-to-arm" ratio).
+- **Aesthetic balanced**: all visible muscles 10–18 equally.
+
+## Proportionality scoring (`engine/proportions.py`)
+
+When the goal is aesthetic, `assess_proportions()` evaluates body measurements:
+
+- **shoulder_to_waist**: target 1.618 (golden ratio) for V-taper/classic.
+- **chest_to_waist**: target 1.35–1.40.
+- **calf_to_arm**: target 1.0 for classic physique.
+- **arm_symmetry / leg_symmetry**: flag if left-right ratio < 0.95.
+
+Each ratio contributes to a 0–100 score. Ratios below target produce
+`LaggingPart` entries with suggested muscles and volume adjustments.
+The `get_physique_report` tool and the `physique_balance` briefing key
+surface this data.

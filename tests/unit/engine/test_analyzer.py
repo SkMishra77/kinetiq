@@ -1,6 +1,9 @@
 """Analyzer end-to-end scenarios."""
 from kinetiq.engine.analyzer import (
-    ExerciseInput, SetInput, analyse_exercise, analyse_session,
+    ExerciseInput,
+    SetInput,
+    analyse_exercise,
+    analyse_session,
 )
 
 

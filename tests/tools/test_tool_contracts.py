@@ -15,12 +15,15 @@ GOLDEN = Path(__file__).parent.parent / "golden" / "tool_contracts.json"
 
 EXPECTED_TOOLS = {
     "get_briefing", "save_profile", "log_checkin", "log_pain_or_injury",
-    "search_exercises", "add_exercise", "compare_exercises",
+    "get_body_trends", "get_physique_report",
+    "search_exercises", "add_exercise", "compare_exercises", "plan_1rm_test",
     "create_program", "get_program", "edit_session_template", "set_program_phase",
+    "list_program_templates", "apply_program_template",
     "plan_next_session", "log_workout", "amend_workout", "analyze_workout",
-    "get_exercise_history", "get_training_history", "update_insight",
+    "get_exercise_history", "get_training_history", "update_insight", "get_trends",
     "search_knowledge", "search_research", "save_finding",
-    "export_training_data",
+    "export_training_data", "import_training_data",
+    "log_cardio", "get_cardio_history",
 }
 
 

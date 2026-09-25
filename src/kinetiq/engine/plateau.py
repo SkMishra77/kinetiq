@@ -1,9 +1,12 @@
 """Plateau detection and recommendations."""
 from __future__ import annotations
+
 from dataclasses import dataclass
 
 from .thresholds import (
-    PLATEAU_WARN_COUNT, PLATEAU_ACTION_COUNT, PLATEAU_MIN_SPAN_DAYS,
+    PLATEAU_ACTION_COUNT,
+    PLATEAU_MIN_SPAN_DAYS,
+    PLATEAU_WARN_COUNT,
 )
 
 

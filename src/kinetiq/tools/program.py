@@ -1,16 +1,17 @@
 """create_program, edit_session_template, set_program_phase, get_program tools."""
 from __future__ import annotations
+
 from typing import Annotated
 
 from fastmcp import FastMCP
 from fastmcp.exceptions import ToolError
-from pydantic import Field
 from mcp.types import ToolAnnotations
+from pydantic import Field
 
-from ..services import Services
-from ..domain.models import ProgramInput
-from ..db.repos import programs as prg
 from ..db.repos import exercises as exr
+from ..db.repos import programs as prg
+from ..domain.models import ProgramInput
+from ..services import Services
 
 
 def register(mcp: FastMCP, svc: Services) -> None:
@@ -268,3 +269,134 @@ def register(mcp: FastMCP, svc: Services) -> None:
                           (tpl[0] - 1, pid))
                 return {"status": "rotation_set", "next_template_index": tpl[0] - 1}
         raise ToolError(f"unsupported action: {action}")
+
+    @mcp.tool(
+        name="list_program_templates",
+        description=(
+            "List pre-built program templates matching the user's goal, "
+            "experience level, days/week and available equipment. Use during "
+            "onboarding or when the user asks for a program recommendation. "
+            "Returns template slug, name, description, and required equipment."
+        ),
+        annotations=ToolAnnotations(
+            title="List Program Templates", readOnlyHint=True, destructiveHint=False,
+            idempotentHint=True, openWorldHint=False,
+        ),
+    )
+    def list_program_templates(
+        goal: Annotated[str | None, Field(default=None)] = None,
+        experience: Annotated[str | None, Field(default=None)] = None,
+        days_per_week: Annotated[int | None, Field(default=None, ge=1, le=7)] = None,
+        equipment: Annotated[list[str] | None, Field(default=None)] = None,
+    ) -> dict:
+        templates = _load_program_templates()
+        filtered = []
+        for t in templates:
+            if goal and t["goal"] != goal:
+                continue
+            if experience and experience not in t.get("experience", []):
+                continue
+            if days_per_week and t["days_per_week"] != days_per_week:
+                continue
+            if equipment:
+                avail = set(equipment)
+                required = set(t.get("equipment_required", []))
+                if not required.issubset(avail | {"bodyweight"}):
+                    continue
+            filtered.append({
+                "slug": t["slug"],
+                "name": t["name"],
+                "goal": t["goal"],
+                "experience": t.get("experience", []),
+                "split_type": t["split_type"],
+                "days_per_week": t["days_per_week"],
+                "progression_model": t["progression_model"],
+                "equipment_required": t.get("equipment_required", []),
+                "description": t.get("description", ""),
+                "session_count": len(t.get("sessions", [])),
+            })
+        return {"count": len(filtered), "templates": filtered}
+
+    @mcp.tool(
+        name="apply_program_template",
+        description=(
+            "Instantiate a pre-built program template as the user's active "
+            "program. Resolves exercises against the library and respects "
+            "profile equipment. Archives the current active program. Use "
+            "after list_program_templates shows a match."
+        ),
+        annotations=ToolAnnotations(
+            title="Apply Program Template", readOnlyHint=False, destructiveHint=False,
+            idempotentHint=False, openWorldHint=False,
+        ),
+    )
+    def apply_program_template(
+        template_slug: Annotated[str, Field(description="Slug from list_program_templates.")],
+        dry_run: Annotated[bool, Field(default=False)] = False,
+    ) -> dict:
+        templates = _load_program_templates()
+        tmpl = next((t for t in templates if t["slug"] == template_slug), None)
+        if not tmpl:
+            raise ToolError(f"template '{template_slug}' not found")
+
+        unresolved: list[dict] = []
+        resolved_sessions = []
+        for s in tmpl.get("sessions", []):
+            re_exs = []
+            for te in s.get("exercises", []):
+                res = exr.resolve_name(svc.db, te["exercise"])
+                if not res.exercise_id:
+                    unresolved.append({"input": te["exercise"], "candidates": res.candidates})
+                    continue
+                re_exs.append((res.exercise_id, te))
+            resolved_sessions.append((s, re_exs))
+        if unresolved:
+            return {"status": "needs_resolution", "unresolved": unresolved}
+        if dry_run:
+            return {"status": "ok_dry_run", "template": template_slug,
+                     "sessions": len(resolved_sessions)}
+
+        prg.archive_active(svc.db, reason="replaced by apply_program_template")
+        pid = prg.create_program(
+            svc.db, name=tmpl["name"], goal=tmpl["goal"],
+            split_type=tmpl["split_type"], days_per_week=tmpl["days_per_week"],
+            progression_model=tmpl["progression_model"],
+            block_length_weeks=tmpl.get("block_length_weeks", 4),
+            deload_policy={}, rationale=tmpl.get("description"), activate=True,
+        )
+        for i, (s, te_list) in enumerate(resolved_sessions, start=1):
+            tid = prg.add_session_template(
+                svc.db, pid, i, name=s["name"], key_name=s.get("key_name"),
+                focus=s.get("focus"), target_muscles=s.get("target_muscles", []),
+                est_minutes=s.get("est_minutes"),
+            )
+            for j, (eid, te) in enumerate(te_list, start=1):
+                prg.add_template_exercise(
+                    svc.db, tid, j, exercise_id=eid, sets=te.get("sets", 3),
+                    rep_min=te.get("rep_min", 8), rep_max=te.get("rep_max", 12),
+                    target_rir=te.get("target_rir", 2), rest_s=te.get("rest_s", 120),
+                    tempo=te.get("tempo"), role=te.get("role", "primary"),
+                    progression_rule=te.get("progression_rule"),
+                    increment_kg=te.get("increment_kg"),
+                    start_weight_kg=te.get("start_weight_kg"),
+                    is_optional=te.get("is_optional", False),
+                    notes=te.get("notes"),
+                )
+        return {
+            "status": "stored",
+            "program_id": pid,
+            "template_slug": template_slug,
+            "echo": f"Applied template '{tmpl['name']}' with {len(resolved_sessions)} sessions.",
+        }
+
+
+def _load_program_templates() -> list[dict]:
+    """Load program templates from the YAML data file."""
+    from pathlib import Path
+
+    import yaml
+    path = Path(__file__).parent.parent / "data" / "program_templates.yaml"
+    if not path.exists():
+        return []
+    with open(path, encoding="utf-8") as f:
+        return yaml.safe_load(f) or []

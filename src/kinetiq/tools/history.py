@@ -1,15 +1,15 @@
 """get_exercise_history, get_training_history, update_insight tools."""
 from __future__ import annotations
+
 from typing import Annotated
 
 from fastmcp import FastMCP
-from fastmcp.exceptions import ToolError
-from pydantic import Field
 from mcp.types import ToolAnnotations
+from pydantic import Field
 
-from ..services import Services
 from ..db.repos import exercises as exr
 from ..db.repos import workouts as wr
+from ..services import Services
 
 
 def register(mcp: FastMCP, svc: Services) -> None:
@@ -138,3 +138,67 @@ def register(mcp: FastMCP, svc: Services) -> None:
                 (status, status, resolution, insight_id),
             )
         return {"insight_id": insight_id, "status": status}
+
+    @mcp.tool(
+        name="get_trends",
+        description=(
+            "Return time-series data for e1RM, volume, bodyweight, or "
+            "performance trends, shaped for charts. Specify `metric` "
+            "(e1rm/bodyweight/performance) and optional exercise filter for "
+            "e1rm. Use when the user asks 'show my progress' or 'how has my "
+            "bench gone over time'."
+        ),
+        annotations=ToolAnnotations(
+            title="Get Trends", readOnlyHint=True, destructiveHint=False,
+            idempotentHint=True, openWorldHint=False,
+        ),
+    )
+    def get_trends(
+        metric: Annotated[str, Field(
+            pattern="^(e1rm|bodyweight|performance)$",
+            description="Which metric to chart.")],
+        exercise: Annotated[str | None, Field(default=None,
+            description="Exercise name or alias (required for e1rm).")] = None,
+        days: Annotated[int, Field(default=90, ge=7, le=365)] = 90,
+    ) -> dict:
+        from ..db.repos import analysis as anal_repo
+
+        if metric == "e1rm":
+            if not exercise:
+                from fastmcp.exceptions import ToolError
+                raise ToolError("e1rm metric requires an exercise name")
+            r = exr.resolve_name(svc.db, exercise)
+            if not r.exercise_id:
+                return {"status": "needs_resolution", "candidates": r.candidates}
+            data_points = anal_repo.e1rm_series(svc.db, r.exercise_id, days)
+            return _trends_response(metric, data_points,
+                                     exercise={"id": r.exercise_id, "name": r.name})
+        if metric == "bodyweight":
+            rows = svc.db.execute(
+                "SELECT checkin_on AS date, bodyweight_kg AS value "
+                "FROM checkins WHERE bodyweight_kg IS NOT NULL "
+                "AND checkin_on >= date('now', ?) ORDER BY checkin_on ASC",
+                (f"-{days} days",),
+            ).fetchall()
+            return _trends_response(metric, [dict(r) for r in rows])
+        # performance
+        data_points = anal_repo.performance_series(svc.db, days)
+        return _trends_response(metric, data_points)
+
+
+def _trends_response(metric: str, data_points: list[dict],
+                      exercise: dict | None = None) -> dict:
+    values = [p["value"] for p in data_points if p.get("value") is not None]
+    summary: dict = {}
+    if values:
+        summary = {
+            "min": min(values),
+            "max": max(values),
+            "avg": round(sum(values) / len(values), 2),
+            "delta": round(values[-1] - values[0], 2) if len(values) > 1 else 0.0,
+            "count": len(values),
+        }
+    out: dict = {"metric": metric, "data_points": data_points, "summary": summary}
+    if exercise:
+        out["exercise"] = exercise
+    return out

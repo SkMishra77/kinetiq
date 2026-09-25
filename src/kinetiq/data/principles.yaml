@@ -111,3 +111,95 @@
   claim: "Low-intensity steady-state (~30–60 min brisk walking or Zone-2) 2–4×/week complements resistance training for fat loss with minimal interference."
   detail: "High-volume high-intensity concurrent training can blunt strength/hypertrophy; low-intensity walking or Zone-2 does not."
   strength: moderate
+
+# ---- New principles added in feature roadmap ----
+
+- slug: progressive-overload
+  topic: progression
+  goal_tags: [muscle_gain, strength, recomposition]
+  claim: "Progressive overload — systematically increasing training demands over time — is the foundational driver of both strength and hypertrophy adaptation."
+  detail: "Overload can be achieved via load, volume, or density increases. Without progressive overload, training adaptations plateau. The rate of progression slows with training age."
+  strength: strong
+  citations:
+    - {pmid: "12436270", title: "Progression models in resistance training for healthy adults"}
+
+- slug: protein-intake-hypertrophy
+  topic: nutrition
+  goal_tags: [muscle_gain, recomposition, fat_loss]
+  claim: "A daily protein intake of ~1.6–2.2 g/kg body weight maximises resistance-training-induced muscle protein synthesis."
+  detail: "Meta-analysis of 49 studies shows intakes above ~1.6 g/kg/day produce diminishing returns for lean mass gains. Distributing protein across 3–5 meals/day may have a small additional benefit."
+  strength: strong
+  citations:
+    - {pmid: "28698222", title: "A systematic review, meta-analysis and meta-regression of the effect of protein supplementation on resistance training-induced gains in muscle mass and strength in healthy adults"}
+
+- slug: masters-training
+  topic: age_adaptation
+  goal_tags: [muscle_gain, strength, general_fitness]
+  claim: "Older adults (≥ 50) respond to resistance training with meaningful strength and hypertrophy gains; programming should emphasise joint-friendly loading and adequate recovery."
+  detail: "Ageing slows but does not eliminate adaptation. Masters trainees benefit from slightly higher volume, lower maximal intensities, and more recovery time between sessions for the same muscle group."
+  strength: moderate
+  citations:
+    - {pmid: "30994220", title: "Resistance Training for Older Adults: Position Statement From the National Strength and Conditioning Association"}
+
+- slug: female-periodisation
+  topic: periodisation
+  goal_tags: [muscle_gain, strength]
+  claim: "Menstrual-cycle-based periodisation (higher volume in the follicular phase, reduced in the late luteal phase) may offer a small advantage for strength and hypertrophy in eumenorrheic women."
+  detail: "Hormonal fluctuations across the menstrual cycle influence recovery and performance. Some evidence supports programming heavier loads in the follicular phase, but individual variation is high."
+  strength: limited
+  citations:
+    - {pmid: "31530817", title: "Does exercise training during the menstrual cycle affect muscle strength and hypertrophy?"}
+
+- slug: creatine-supplementation
+  topic: supplementation
+  goal_tags: [muscle_gain, strength]
+  claim: "Creatine monohydrate supplementation (3–5 g/day) reliably increases maximal strength and lean body mass when combined with resistance training."
+  detail: "One of the most well-researched ergogenic supplements. The benefit comes from increased phosphocreatine availability allowing more work per set. Loading phases are optional."
+  strength: strong
+  citations:
+    - {pmid: "28615996", title: "International Society of Sports Nutrition position stand: safety and efficacy of creatine supplementation in exercise, sport, and medicine"}
+
+- slug: rate-of-progression
+  topic: progression
+  goal_tags: [muscle_gain, strength]
+  claim: "Untrained individuals can expect rapid strength gains (2–4 % per session initially), while intermediate/advanced trainees progress more slowly (1–2 % per week or less)."
+  detail: "Realistic expectations for rate of strength and muscle gain depend heavily on training age. Beginners adapt fast but taper within months; advanced trainees may gain only a few kg of 1RM per year."
+  strength: moderate
+  citations:
+    - {pmid: "15903375", title: "Periodization: Theory and methodology of training"}
+
+- slug: rotator-cuff-prehab
+  topic: prehab
+  goal_tags: [strength, muscle_gain, general_fitness]
+  claim: "Regular external-rotation and scapular-stability exercises reduce shoulder injury risk in overhead and pressing athletes."
+  detail: "Including band external rotations, face pulls, and scapular retractions as warm-up or accessory work addresses common imbalances from pressing-dominant programs."
+  strength: moderate
+  citations:
+    - {pmid: "20927027", title: "Strengthening the supraspinatus — a systematic review"}
+
+- slug: eccentric-tendinopathy
+  topic: rehabilitation
+  goal_tags: [general_fitness]
+  claim: "Eccentric-loading protocols (e.g. eccentric heel drops for Achilles tendinopathy) are a first-line conservative treatment for chronic tendon pain."
+  detail: "Heavy slow resistance and eccentric-only protocols show comparable effectiveness. Pain should be monitored but mild pain during loading is acceptable. Progress gradually."
+  strength: moderate
+  citations:
+    - {pmid: "15706558", title: "Midportion Achilles tendinopathy and the plantaris tendon"}
+
+- slug: bilateral-deficit
+  topic: exercise_selection
+  goal_tags: [muscle_gain, strength]
+  claim: "A 'bilateral deficit' exists where the sum of unilateral force exceeds bilateral force; unilateral exercises can complement bilateral compounds for balanced development."
+  detail: "Including unilateral work (split squats, single-arm rows) helps address side-to-side imbalances and may improve sport-specific transfer."
+  strength: moderate
+  citations:
+    - {pmid: "33231178", title: "Bilateral deficit in maximal force production"}
+
+- slug: mind-muscle-connection
+  topic: technique
+  goal_tags: [muscle_gain]
+  claim: "An internal focus ('squeeze the target muscle') during isolation exercises at moderate loads can enhance muscle activation and hypertrophy."
+  detail: "The effect is clearer for isolation exercises at lighter loads. For heavy compound lifts, an external focus ('push the floor away') tends to produce better performance."
+  strength: limited
+  citations:
+    - {pmid: "26700744", title: "Importance of mind-muscle connection during progressive resistance training"}

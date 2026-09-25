@@ -1,16 +1,17 @@
 """search_exercises, add_exercise, compare_exercises tools."""
 from __future__ import annotations
+
 from typing import Annotated
 
 from fastmcp import FastMCP
 from fastmcp.exceptions import ToolError
-from pydantic import Field
 from mcp.types import ToolAnnotations
+from pydantic import Field
 
-from ..services import Services
 from ..db.repos import exercises as exr
-from ..db.repos import profile as pr
 from ..db.repos import knowledge as kr
+from ..db.repos import profile as pr
+from ..services import Services
 
 
 def register(mcp: FastMCP, svc: Services) -> None:
@@ -126,6 +127,11 @@ def register(mcp: FastMCP, svc: Services) -> None:
         else:
             pool = exr.search(svc.db, muscle=muscle, limit=40)
         scored: list[dict] = []
+        from ..engine.thresholds import AESTHETIC_VOLUME_PRIORITIES
+        aesthetic_map = AESTHETIC_VOLUME_PRIORITIES.get(goal)
+        priority_muscles: set[str] = set()
+        if aesthetic_map:
+            priority_muscles = {m for m, (lo, _) in aesthetic_map.items() if lo >= 14}
         for ex in pool:
             if not ex:
                 continue
@@ -135,9 +141,10 @@ def register(mcp: FastMCP, svc: Services) -> None:
                        1 if muscle in (ex.get("secondary_muscles") or []) else 0
             notes = kr.search_notes(svc.db, exercise_id=ex["id"], goal=goal, limit=3)
             evidence_bonus = 0.5 if any(n.get("citations") for n in notes) else 0.0
+            aesthetic_bonus = 1.0 if (aesthetic_map and muscle in priority_muscles) else 0.0
             scored.append({
                 "slug": ex["slug"], "name": ex["name"],
-                "score": base + emphasis + evidence_bonus,
+                "score": base + emphasis + evidence_bonus + aesthetic_bonus,
                 "muscle_emphasis": "primary" if emphasis == 2 else "secondary" if emphasis == 1 else "none",
                 "equipment": ex["equipment"], "movement_pattern": ex["movement_pattern"],
                 "evidence_summary": ex.get("evidence_summary"),
@@ -148,3 +155,53 @@ def register(mcp: FastMCP, svc: Services) -> None:
         return {"muscle": muscle, "goal": goal,
                  "candidates": scored[:limit],
                  "notice": "'score' is a ranking guide, not a substitute for training judgment."}
+
+    @mcp.tool(
+        name="plan_1rm_test",
+        description=(
+            "Generate a 1RM testing protocol for an exercise based on the "
+            "user's current estimated max. Returns warm-up ramp sets, working "
+            "ramp singles, and three attempts (95%, 100%, 102.5% of e1RM) with "
+            "prescribed rest. Use when the user wants to test their true 1RM."
+        ),
+        annotations=ToolAnnotations(
+            title="Plan 1RM Test", readOnlyHint=True, destructiveHint=False,
+            idempotentHint=True, openWorldHint=False,
+        ),
+    )
+    def plan_1rm_test(
+        exercise: Annotated[str, Field(description="Exercise name or alias.")],
+        estimated_1rm_kg: Annotated[float | None, Field(default=None, ge=10,
+            description="Override e1RM. If omitted, uses the library's best e1RM.")] = None,
+    ) -> dict:
+        r = exr.resolve_name(svc.db, exercise)
+        if not r.exercise_id:
+            return {"status": "needs_resolution", "candidates": r.candidates}
+        ex = exr.get_by_id(svc.db, r.exercise_id) or {}
+        increment = ex.get("default_increment_kg") or 2.5
+
+        e1rm_val = estimated_1rm_kg
+        if e1rm_val is None:
+            stats = svc.db.execute(
+                "SELECT best_e1rm_kg FROM exercise_stats WHERE exercise_id=?",
+                (r.exercise_id,),
+            ).fetchone()
+            if stats and stats["best_e1rm_kg"]:
+                e1rm_val = stats["best_e1rm_kg"]
+        if e1rm_val is None:
+            from fastmcp.exceptions import ToolError
+            raise ToolError(
+                "No e1RM history for this exercise. Provide estimated_1rm_kg."
+            )
+
+        from ..engine.e1rm import plan_1rm_test as _plan
+        protocol = _plan(e1rm_val, increment_kg=increment)
+        return {
+            "exercise": {"id": r.exercise_id, "name": r.name, "slug": r.slug},
+            "estimated_1rm_kg": e1rm_val,
+            "protocol": [
+                {"kind": a.kind, "load_kg": a.load_kg, "reps": a.reps,
+                 "rest_min": a.rest_min, "notes": a.notes}
+                for a in protocol
+            ],
+        }

@@ -1,5 +1,4 @@
 """Alias resolution — checks normalisation and fuzzy fallback thresholds."""
-import pytest
 
 from kinetiq.parsing.aliases import normalise, resolve
 

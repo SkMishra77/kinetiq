@@ -1,5 +1,6 @@
 """Profile / equipment / preferences / injuries / limitations / body-metric SQL."""
 from __future__ import annotations
+
 import json
 from typing import Any
 
@@ -87,7 +88,7 @@ def upsert_profile(db: Database, patch: dict, changed_fields: list[str], reason:
                 "updated_at": None,
             }
             cols = ",".join(fields.keys())
-            marks = ",".join(f":{k}" for k in fields.keys())
+            marks = ",".join(f":{k}" for k in fields)
             sql = f"INSERT INTO profile({cols}) VALUES({marks})".replace(
                 ":created_at", "datetime('now')").replace(":updated_at", "datetime('now')")
             del fields["created_at"]
@@ -209,3 +210,59 @@ def latest_bodyweight(db: Database) -> float | None:
         "ORDER BY measured_on DESC, id DESC LIMIT 1"
     ).fetchone()
     return row[0] if row else None
+
+
+def body_composition_trend(db: Database, days: int = 90) -> dict:
+    """Return body weight, body fat, and measurement time series."""
+    metrics = db.execute(
+        "SELECT id, measured_on, weight_kg, body_fat_pct, source "
+        "FROM body_metrics WHERE measured_on >= date('now', ?) "
+        "ORDER BY measured_on ASC",
+        (f"-{days} days",),
+    ).fetchall()
+    data_points: list[dict] = []
+    for m in metrics:
+        d = dict(m)
+        meas_rows = db.execute(
+            "SELECT site, value_cm FROM body_measurements WHERE metric_id=?",
+            (m["id"],),
+        ).fetchall()
+        d["measurements"] = {r["site"]: r["value_cm"] for r in meas_rows} if meas_rows else {}
+        data_points.append(d)
+
+    weights = [p["weight_kg"] for p in data_points if p["weight_kg"] is not None]
+    bf = [p["body_fat_pct"] for p in data_points if p["body_fat_pct"] is not None]
+    summary: dict = {}
+    if weights:
+        summary["weight"] = {
+            "latest": weights[-1],
+            "min": min(weights),
+            "max": max(weights),
+            "avg": round(sum(weights) / len(weights), 2),
+            "delta": round(weights[-1] - weights[0], 2) if len(weights) > 1 else 0.0,
+        }
+    if bf:
+        summary["body_fat_pct"] = {
+            "latest": bf[-1],
+            "min": min(bf),
+            "max": max(bf),
+            "avg": round(sum(bf) / len(bf), 2),
+            "delta": round(bf[-1] - bf[0], 2) if len(bf) > 1 else 0.0,
+        }
+    return {"data_points": data_points, "summary": summary, "days": days}
+
+
+def latest_measurements(db: Database) -> dict[str, float] | None:
+    """Return the most recent body_measurements as a flat ``{site: value_cm}`` dict."""
+    row = db.execute(
+        "SELECT id FROM body_metrics ORDER BY measured_on DESC, id DESC LIMIT 1"
+    ).fetchone()
+    if not row:
+        return None
+    meas = db.execute(
+        "SELECT site, value_cm FROM body_measurements WHERE metric_id=?",
+        (row["id"],),
+    ).fetchall()
+    if not meas:
+        return None
+    return {r["site"]: r["value_cm"] for r in meas}

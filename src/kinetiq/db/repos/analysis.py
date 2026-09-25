@@ -2,11 +2,11 @@
 personal_records / next_session_adjustments and update exercise_stats.
 """
 from __future__ import annotations
-import json
-from typing import Any
 
-from ..connection import Database
+import json
+
 from ...engine.analyzer import SessionAnalysisOutput
+from ..connection import Database
 
 
 def store(db: Database, workout_id: int, out: SessionAnalysisOutput) -> int:
@@ -195,5 +195,35 @@ def recent_prs(db: Database, days: int = 30, limit: int = 20) -> list[dict]:
         "WHERE pr.achieved_on >= date('now', ?) "
         "ORDER BY pr.achieved_on DESC LIMIT ?",
         (f"-{days} days", limit)
+    ).fetchall()
+    return [dict(r) for r in rows]
+
+
+def e1rm_series(db: Database, exercise_id: int, days: int = 180) -> list[dict]:
+    """Return e1RM time series for an exercise."""
+    rows = db.execute(
+        """SELECT w.performed_on AS date, ea.e1rm_kg AS value,
+                  ea.status AS label
+           FROM exercise_analyses ea
+             JOIN session_analyses sa ON sa.id=ea.session_analysis_id
+             JOIN workouts w ON w.id=sa.workout_id
+           WHERE ea.exercise_id=? AND w.status<>'voided'
+             AND w.performed_on >= date('now', ?)
+           ORDER BY w.performed_on ASC""",
+        (exercise_id, f"-{days} days"),
+    ).fetchall()
+    return [dict(r) for r in rows if r["value"] is not None]
+
+
+def performance_series(db: Database, days: int = 90) -> list[dict]:
+    """Return per-session performance score time series."""
+    rows = db.execute(
+        """SELECT w.performed_on AS date, sa.performance_score AS value,
+                  sa.summary AS label
+           FROM session_analyses sa
+             JOIN workouts w ON w.id=sa.workout_id
+           WHERE w.status<>'voided' AND w.performed_on >= date('now', ?)
+           ORDER BY w.performed_on ASC""",
+        (f"-{days} days",),
     ).fetchall()
     return [dict(r) for r in rows]
