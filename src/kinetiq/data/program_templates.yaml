@@ -1,0 +1,197 @@
+# Pre-built program templates for quick-start onboarding.
+# Each template is resolved against the exercise library at apply time.
+# Exercises use slugs; aliases or names also work via resolve_name.
+
+- slug: beginner-full-body-3x
+  name: "Beginner Full Body 3x/week"
+  goal: muscle_gain
+  experience: [beginner, novice]
+  split_type: full_body
+  days_per_week: 3
+  progression_model: double_progression
+  block_length_weeks: 4
+  equipment_required: [barbell, dumbbell]
+  description: "A simple 3-day full-body program for beginners. Focuses on compound movements with moderate volume to build a base of strength and muscle."
+  sessions:
+    - name: "Full Body A"
+      focus: "compounds"
+      target_muscles: [chest, quads, lats, shoulders]
+      exercises:
+        - {exercise: barbell-bench-press, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 150}
+        - {exercise: barbell-back-squat, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 180}
+        - {exercise: barbell-row, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 150}
+        - {exercise: overhead-press, sets: 3, rep_min: 8, rep_max: 12, role: secondary, rest_s: 120}
+        - {exercise: plank, sets: 3, rep_min: 30, rep_max: 60, role: core, rest_s: 60}
+    - name: "Full Body B"
+      focus: "compounds"
+      target_muscles: [chest, hamstrings, lats, triceps]
+      exercises:
+        - {exercise: dumbbell-bench-press, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 150}
+        - {exercise: romanian-deadlift, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 180}
+        - {exercise: lat-pulldown, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 120}
+        - {exercise: dumbbell-shoulder-press, sets: 3, rep_min: 8, rep_max: 12, role: secondary, rest_s: 120}
+        - {exercise: hanging-leg-raise, sets: 3, rep_min: 8, rep_max: 15, role: core, rest_s: 60}
+
+- slug: novice-upper-lower-4x
+  name: "Novice Upper/Lower 4x/week"
+  goal: muscle_gain
+  experience: [novice, intermediate]
+  split_type: upper_lower
+  days_per_week: 4
+  progression_model: double_progression
+  block_length_weeks: 4
+  equipment_required: [barbell, dumbbell, cable]
+  description: "A 4-day upper/lower split for novice to intermediate trainees. Balances push/pull on upper days and quad/hinge on lower days."
+  sessions:
+    - name: "Upper A (Push focus)"
+      focus: "upper push"
+      target_muscles: [chest, front_delts, triceps, lats, biceps]
+      exercises:
+        - {exercise: barbell-bench-press, sets: 4, rep_min: 6, rep_max: 10, role: primary, rest_s: 180}
+        - {exercise: barbell-row, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 150}
+        - {exercise: overhead-press, sets: 3, rep_min: 8, rep_max: 12, role: secondary, rest_s: 120}
+        - {exercise: cable-fly, sets: 3, rep_min: 10, rep_max: 15, role: isolation, rest_s: 75}
+        - {exercise: barbell-curl, sets: 3, rep_min: 10, rep_max: 15, role: isolation, rest_s: 75}
+    - name: "Lower A (Squat focus)"
+      focus: "lower squat"
+      target_muscles: [quads, glutes, hamstrings, calves]
+      exercises:
+        - {exercise: barbell-back-squat, sets: 4, rep_min: 6, rep_max: 10, role: primary, rest_s: 180}
+        - {exercise: romanian-deadlift, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 150}
+        - {exercise: leg-press, sets: 3, rep_min: 10, rep_max: 15, role: secondary, rest_s: 120}
+        - {exercise: leg-curl, sets: 3, rep_min: 10, rep_max: 15, role: isolation, rest_s: 75}
+        - {exercise: standing-calf-raise, sets: 3, rep_min: 12, rep_max: 20, role: isolation, rest_s: 60}
+    - name: "Upper B (Pull focus)"
+      focus: "upper pull"
+      target_muscles: [lats, upper_back, rear_delts, biceps, triceps]
+      exercises:
+        - {exercise: pull-up, sets: 4, rep_min: 5, rep_max: 10, role: primary, rest_s: 150}
+        - {exercise: incline-dumbbell-press, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 150}
+        - {exercise: seated-cable-row, sets: 3, rep_min: 10, rep_max: 12, role: secondary, rest_s: 120}
+        - {exercise: dumbbell-lateral-raise, sets: 3, rep_min: 12, rep_max: 20, role: isolation, rest_s: 60}
+        - {exercise: cable-triceps-pushdown, sets: 3, rep_min: 10, rep_max: 15, role: isolation, rest_s: 75}
+    - name: "Lower B (Hinge focus)"
+      focus: "lower hinge"
+      target_muscles: [hamstrings, glutes, quads, abs]
+      exercises:
+        - {exercise: deadlift, sets: 3, rep_min: 5, rep_max: 8, role: primary, rest_s: 180}
+        - {exercise: goblet-squat, sets: 3, rep_min: 10, rep_max: 15, role: secondary, rest_s: 120}
+        - {exercise: hip-thrust, sets: 3, rep_min: 8, rep_max: 12, role: secondary, rest_s: 120}
+        - {exercise: leg-extension, sets: 3, rep_min: 12, rep_max: 15, role: isolation, rest_s: 75}
+        - {exercise: hanging-leg-raise, sets: 3, rep_min: 8, rep_max: 15, role: core, rest_s: 60}
+
+- slug: intermediate-ppl-6x
+  name: "Intermediate PPL 6x/week"
+  goal: muscle_gain
+  experience: [intermediate, advanced]
+  split_type: push_pull_legs
+  days_per_week: 6
+  progression_model: double_progression
+  block_length_weeks: 4
+  equipment_required: [barbell, dumbbell, cable, machine]
+  description: "Classic Push/Pull/Legs run twice per week for intermediate and advanced trainees. Higher volume and frequency for maximal hypertrophy."
+  sessions:
+    - name: "Push"
+      focus: "chest, shoulders, triceps"
+      target_muscles: [chest, front_delts, side_delts, triceps]
+      exercises:
+        - {exercise: barbell-bench-press, sets: 4, rep_min: 6, rep_max: 10, role: primary, rest_s: 180}
+        - {exercise: incline-dumbbell-press, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 150}
+        - {exercise: overhead-press, sets: 3, rep_min: 8, rep_max: 12, role: secondary, rest_s: 120}
+        - {exercise: cable-fly, sets: 3, rep_min: 12, rep_max: 15, role: isolation, rest_s: 75}
+        - {exercise: dumbbell-lateral-raise, sets: 3, rep_min: 12, rep_max: 20, role: isolation, rest_s: 60}
+        - {exercise: cable-triceps-pushdown, sets: 3, rep_min: 10, rep_max: 15, role: isolation, rest_s: 75}
+    - name: "Pull"
+      focus: "back, biceps"
+      target_muscles: [lats, upper_back, rear_delts, biceps]
+      exercises:
+        - {exercise: barbell-row, sets: 4, rep_min: 6, rep_max: 10, role: primary, rest_s: 180}
+        - {exercise: pull-up, sets: 3, rep_min: 6, rep_max: 10, role: primary, rest_s: 150}
+        - {exercise: seated-cable-row, sets: 3, rep_min: 10, rep_max: 12, role: secondary, rest_s: 120}
+        - {exercise: rear-delt-flye, sets: 3, rep_min: 12, rep_max: 20, role: isolation, rest_s: 60}
+        - {exercise: barbell-curl, sets: 3, rep_min: 8, rep_max: 12, role: isolation, rest_s: 75}
+        - {exercise: dumbbell-curl, sets: 2, rep_min: 10, rep_max: 15, role: isolation, rest_s: 60}
+    - name: "Legs"
+      focus: "quads, hamstrings, glutes"
+      target_muscles: [quads, hamstrings, glutes, calves, abs]
+      exercises:
+        - {exercise: barbell-back-squat, sets: 4, rep_min: 6, rep_max: 10, role: primary, rest_s: 180}
+        - {exercise: romanian-deadlift, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 150}
+        - {exercise: leg-press, sets: 3, rep_min: 10, rep_max: 15, role: secondary, rest_s: 120}
+        - {exercise: leg-curl, sets: 3, rep_min: 10, rep_max: 15, role: isolation, rest_s: 75}
+        - {exercise: standing-calf-raise, sets: 4, rep_min: 12, rep_max: 20, role: isolation, rest_s: 60}
+        - {exercise: plank, sets: 3, rep_min: 30, rep_max: 60, role: core, rest_s: 60}
+
+- slug: strength-4x-wave
+  name: "Strength-Focused 4x/week (Wave)"
+  goal: strength
+  experience: [intermediate, advanced]
+  split_type: upper_lower
+  days_per_week: 4
+  progression_model: wave
+  block_length_weeks: 3
+  equipment_required: [barbell, dumbbell]
+  description: "A wave-periodised 4-day program for strength. 3-week cycles: week 1 higher reps, week 2 moderate, week 3 heavy, then reset at a higher load."
+  sessions:
+    - name: "Upper Heavy"
+      focus: "bench, press"
+      target_muscles: [chest, front_delts, triceps, lats]
+      exercises:
+        - {exercise: barbell-bench-press, sets: 4, rep_min: 5, rep_max: 8, role: primary, rest_s: 240}
+        - {exercise: overhead-press, sets: 3, rep_min: 5, rep_max: 8, role: primary, rest_s: 180}
+        - {exercise: barbell-row, sets: 3, rep_min: 6, rep_max: 10, role: secondary, rest_s: 150}
+        - {exercise: dumbbell-curl, sets: 3, rep_min: 8, rep_max: 12, role: isolation, rest_s: 75}
+    - name: "Lower Heavy"
+      focus: "squat, deadlift"
+      target_muscles: [quads, hamstrings, glutes, lower_back]
+      exercises:
+        - {exercise: barbell-back-squat, sets: 4, rep_min: 5, rep_max: 8, role: primary, rest_s: 240}
+        - {exercise: deadlift, sets: 3, rep_min: 3, rep_max: 6, role: primary, rest_s: 240}
+        - {exercise: walking-lunge, sets: 3, rep_min: 8, rep_max: 12, role: secondary, rest_s: 120}
+        - {exercise: plank, sets: 3, rep_min: 30, rep_max: 60, role: core, rest_s: 60}
+    - name: "Upper Volume"
+      focus: "bench, row accessories"
+      target_muscles: [chest, lats, side_delts, triceps, biceps]
+      exercises:
+        - {exercise: incline-dumbbell-press, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 150}
+        - {exercise: pull-up, sets: 3, rep_min: 6, rep_max: 10, role: primary, rest_s: 150}
+        - {exercise: dumbbell-lateral-raise, sets: 3, rep_min: 12, rep_max: 20, role: isolation, rest_s: 60}
+        - {exercise: cable-triceps-pushdown, sets: 3, rep_min: 10, rep_max: 15, role: isolation, rest_s: 75}
+    - name: "Lower Volume"
+      focus: "squat accessories, glutes"
+      target_muscles: [quads, glutes, hamstrings, calves]
+      exercises:
+        - {exercise: front-squat, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 150}
+        - {exercise: hip-thrust, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 120}
+        - {exercise: leg-curl, sets: 3, rep_min: 10, rep_max: 15, role: isolation, rest_s: 75}
+        - {exercise: standing-calf-raise, sets: 4, rep_min: 12, rep_max: 20, role: isolation, rest_s: 60}
+
+- slug: minimal-home-gym-3x
+  name: "Minimal Home Gym 3x/week"
+  goal: general_fitness
+  experience: [beginner, novice, intermediate]
+  split_type: full_body
+  days_per_week: 3
+  progression_model: double_progression
+  block_length_weeks: 4
+  equipment_required: [dumbbell, bodyweight]
+  description: "A 3-day full-body program requiring only dumbbells and bodyweight. Perfect for home gyms with minimal equipment."
+  sessions:
+    - name: "Home A"
+      focus: "push & squat"
+      target_muscles: [chest, quads, shoulders, triceps, abs]
+      exercises:
+        - {exercise: dumbbell-bench-press, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 120}
+        - {exercise: goblet-squat, sets: 3, rep_min: 10, rep_max: 15, role: primary, rest_s: 120}
+        - {exercise: dumbbell-shoulder-press, sets: 3, rep_min: 8, rep_max: 12, role: secondary, rest_s: 90}
+        - {exercise: push-up, sets: 3, rep_min: 10, rep_max: 20, role: secondary, rest_s: 60}
+        - {exercise: plank, sets: 3, rep_min: 30, rep_max: 60, role: core, rest_s: 60}
+    - name: "Home B"
+      focus: "pull & hinge"
+      target_muscles: [lats, hamstrings, glutes, biceps, abs]
+      exercises:
+        - {exercise: dumbbell-row, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 120}
+        - {exercise: dumbbell-romanian-deadlift, sets: 3, rep_min: 8, rep_max: 12, role: primary, rest_s: 120}
+        - {exercise: dumbbell-curl, sets: 3, rep_min: 10, rep_max: 15, role: isolation, rest_s: 60}
+        - {exercise: walking-lunge, sets: 3, rep_min: 10, rep_max: 15, role: secondary, rest_s: 90}
+        - {exercise: hanging-leg-raise, sets: 3, rep_min: 8, rep_max: 15, role: core, rest_s: 60}
